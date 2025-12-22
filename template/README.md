@@ -194,8 +194,9 @@ npm run format
 | Endpoint | Method | Description |
 |----------|--------|-------------|
 | `/health` | GET | Health check |
-| `/sse` | GET | SSE connection for MCP |
-| `/message` | POST | Message endpoint for MCP |
+| `/mcp` | GET | SSE stream for server-initiated messages |
+| `/mcp` | POST | Send MCP requests to the server |
+| `/mcp` | DELETE | Terminate session (stateful mode only) |
 
 ## License
 

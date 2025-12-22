@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:dev.to)",
+      "WebFetch(domain:www.freecodecamp.org)"
+    ]
+  }
+}
