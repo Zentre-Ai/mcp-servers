@@ -60,11 +60,31 @@ mcp-servers/
 │   └── ...
 ├── servers/                # Created MCP servers
 │   ├── mcp-server-github/
+│   │   ├── icon.png        # 512x512 server icon
+│   │   └── ...
 │   ├── mcp-server-slack/
 │   └── ...
 ├── CLAUDE.md               # AI coding standards
 └── package.json
 ```
+
+## Server Icon
+
+Each MCP server should include a **512x512 PNG icon** named `icon.png` in the server's root directory. This icon is used by MCP Hub and other MCP-compatible clients to display the server in their UI.
+
+```
+servers/mcp-server-{name}/
+├── icon.png                # Required: 512x512 PNG icon
+├── src/
+├── package.json
+└── ...
+```
+
+**Icon Requirements:**
+- Format: PNG
+- Size: 512x512 pixels
+- Filename: `icon.png`
+- Location: Root of the server directory
 
 ## MCP Concepts
 
