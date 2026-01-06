@@ -1,0 +1,22 @@
+{
+  "name": "mcp-server-miro",
+  "version": "1.0.0",
+  "description": "MCP server for Miro integration with dynamic token authentication",
+  "main": "build/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc && chmod 755 build/index.js",
+    "start": "node build/index.js",
+    "dev": "tsx watch src/index.ts"
+  },
+  "dependencies": {
+    "@mirohq/miro-api": "^2.2.4",
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "zod": "^3.25.23"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.21",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3"
+  }
+}
