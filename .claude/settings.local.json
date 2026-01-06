@@ -3,7 +3,12 @@
     "allow": [
       "WebSearch",
       "WebFetch(domain:dev.to)",
-      "WebFetch(domain:www.freecodecamp.org)"
+      "WebFetch(domain:www.freecodecamp.org)",
+      "Bash(git push:*)",
+      "WebFetch(domain:developers.notion.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:api.github.com)",
+      "Bash(cat:*)"
     ]
   }
 }
