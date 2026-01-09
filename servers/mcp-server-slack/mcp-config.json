@@ -1,0 +1,51 @@
+{
+  "name": "mcp-server-slack",
+  "version": "1.0.0",
+  "description": "MCP server for Slack - channels, messages, users, and reactions",
+  "port": 3004,
+  "auth": {
+    "type": "token",
+    "label": "Slack Bot Token",
+    "required": [],
+    "methods": [
+      {
+        "type": "token",
+        "label": "Bot Token",
+        "headers": [
+          {
+            "header": "x-slack-token",
+            "description": "Slack Bot OAuth token (xoxb-...)"
+          }
+        ]
+      }
+    ]
+  },
+  "tools": [
+    { "name": "slack_list_channels", "description": "List all channels" },
+    { "name": "slack_get_channel", "description": "Get channel info" },
+    { "name": "slack_create_channel", "description": "Create a new channel" },
+    { "name": "slack_archive_channel", "description": "Archive a channel" },
+    { "name": "slack_unarchive_channel", "description": "Unarchive a channel" },
+    { "name": "slack_invite_to_channel", "description": "Invite user to channel" },
+    { "name": "slack_kick_from_channel", "description": "Remove user from channel" },
+    { "name": "slack_get_channel_members", "description": "Get channel members" },
+    { "name": "slack_set_channel_topic", "description": "Set channel topic" },
+    { "name": "slack_set_channel_purpose", "description": "Set channel purpose" },
+    { "name": "slack_post_message", "description": "Post a message" },
+    { "name": "slack_update_message", "description": "Update a message" },
+    { "name": "slack_delete_message", "description": "Delete a message" },
+    { "name": "slack_get_history", "description": "Get channel history" },
+    { "name": "slack_get_thread", "description": "Get thread replies" },
+    { "name": "slack_search_messages", "description": "Search messages" },
+    { "name": "slack_add_reaction", "description": "Add reaction to message" },
+    { "name": "slack_remove_reaction", "description": "Remove reaction" },
+    { "name": "slack_get_reactions", "description": "Get message reactions" },
+    { "name": "slack_list_user_reactions", "description": "List user's reactions" },
+    { "name": "slack_list_users", "description": "List all users" },
+    { "name": "slack_get_user", "description": "Get user info" },
+    { "name": "slack_lookup_user_by_email", "description": "Find user by email" },
+    { "name": "slack_get_user_presence", "description": "Get user presence" },
+    { "name": "slack_get_me", "description": "Get current user info" },
+    { "name": "slack_open_dm", "description": "Open direct message" }
+  ]
+}

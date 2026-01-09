@@ -1,0 +1,37 @@
+{
+  "name": "mcp-server-notion",
+  "version": "1.0.0",
+  "description": "MCP server for Notion - pages, databases, blocks, and comments",
+  "port": 3001,
+  "auth": {
+    "type": "token",
+    "label": "Notion Integration Token",
+    "required": [],
+    "methods": [
+      {
+        "type": "token",
+        "label": "Integration Token",
+        "headers": [
+          {
+            "header": "x-notion-token",
+            "description": "Notion integration token (secret_...)"
+          }
+        ]
+      }
+    ]
+  },
+  "tools": [
+    { "name": "notion_search", "description": "Search pages and databases" },
+    { "name": "notion_retrieve_page", "description": "Retrieve a page" },
+    { "name": "notion_create_page", "description": "Create a new page" },
+    { "name": "notion_update_page", "description": "Update page properties" },
+    { "name": "notion_retrieve_database", "description": "Retrieve database schema" },
+    { "name": "notion_query_database", "description": "Query database entries" },
+    { "name": "notion_retrieve_block_children", "description": "Get block children" },
+    { "name": "notion_append_block_children", "description": "Append blocks" },
+    { "name": "notion_retrieve_block", "description": "Retrieve a block" },
+    { "name": "notion_update_block", "description": "Update a block" },
+    { "name": "notion_retrieve_comments", "description": "Get comments" },
+    { "name": "notion_create_comment", "description": "Create a comment" }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "name": "mcp-server-github",
+  "version": "1.0.0",
+  "description": "MCP server for GitHub - repos, issues, pull requests, and branches",
+  "port": 3006,
+  "auth": {
+    "type": "token",
+    "label": "GitHub Personal Access Token",
+    "required": [],
+    "methods": [
+      {
+        "type": "token",
+        "label": "Personal Access Token",
+        "headers": [
+          {
+            "header": "x-github-token",
+            "description": "GitHub personal access token"
+          }
+        ]
+      }
+    ]
+  },
+  "tools": [
+    { "name": "github_list_repos", "description": "List repositories" },
+    { "name": "github_get_repo", "description": "Get repository details" },
+    { "name": "github_create_repo", "description": "Create a new repository" },
+    { "name": "github_update_repo", "description": "Update repository settings" },
+    { "name": "github_delete_repo", "description": "Delete a repository" },
+    { "name": "github_fork_repo", "description": "Fork a repository" },
+    { "name": "github_list_commits", "description": "List commits" },
+    { "name": "github_get_commit", "description": "Get commit details" },
+    { "name": "github_list_issues", "description": "List issues" },
+    { "name": "github_get_issue", "description": "Get issue details" },
+    { "name": "github_create_issue", "description": "Create a new issue" },
+    { "name": "github_update_issue", "description": "Update an issue" },
+    { "name": "github_add_issue_comment", "description": "Add comment to issue" },
+    { "name": "github_list_issue_comments", "description": "List issue comments" },
+    { "name": "github_add_labels", "description": "Add labels to issue" },
+    { "name": "github_remove_labels", "description": "Remove labels from issue" },
+    { "name": "github_list_pulls", "description": "List pull requests" },
+    { "name": "github_get_pull", "description": "Get pull request details" },
+    { "name": "github_create_pull", "description": "Create a pull request" },
+    { "name": "github_update_pull", "description": "Update a pull request" },
+    { "name": "github_merge_pull", "description": "Merge a pull request" },
+    { "name": "github_list_pull_commits", "description": "List PR commits" },
+    { "name": "github_list_pull_files", "description": "List PR changed files" },
+    { "name": "github_create_review", "description": "Create PR review" },
+    { "name": "github_add_pull_comment", "description": "Add comment to PR" },
+    { "name": "github_list_branches", "description": "List branches" },
+    { "name": "github_get_branch", "description": "Get branch details" },
+    { "name": "github_create_branch", "description": "Create a new branch" },
+    { "name": "github_delete_branch", "description": "Delete a branch" },
+    { "name": "github_merge_branches", "description": "Merge branches" },
+    { "name": "github_get_me", "description": "Get current user" },
+    { "name": "github_get_user", "description": "Get user by username" },
+    { "name": "github_list_org_members", "description": "List organization members" },
+    { "name": "github_search_users", "description": "Search for users" }
+  ]
+}

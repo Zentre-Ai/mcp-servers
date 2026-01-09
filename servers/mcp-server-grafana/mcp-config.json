@@ -1,0 +1,92 @@
+{
+  "name": "mcp-server-grafana",
+  "version": "1.0.0",
+  "description": "MCP server for Grafana - dashboards, datasources, alerts, and observability",
+  "port": 3008,
+  "auth": {
+    "type": "token",
+    "label": "Grafana Service Account Token",
+    "required": [
+      {
+        "header": "x-grafana-url",
+        "description": "Grafana instance URL"
+      }
+    ],
+    "methods": [
+      {
+        "type": "token",
+        "label": "Service Account Token",
+        "headers": [
+          {
+            "header": "x-grafana-token",
+            "description": "Grafana service account token"
+          }
+        ]
+      }
+    ]
+  },
+  "tools": [
+    { "name": "grafana_get_dashboard_by_uid", "description": "Get dashboard by UID" },
+    { "name": "grafana_update_dashboard", "description": "Create or update dashboard" },
+    { "name": "grafana_get_dashboard_panel_queries", "description": "Get panel queries" },
+    { "name": "grafana_get_dashboard_property", "description": "Get dashboard property" },
+    { "name": "grafana_get_dashboard_summary", "description": "Get dashboard summary" },
+    { "name": "grafana_list_datasources", "description": "List all datasources" },
+    { "name": "grafana_get_datasource_by_uid", "description": "Get datasource by UID" },
+    { "name": "grafana_get_datasource_by_name", "description": "Get datasource by name" },
+    { "name": "grafana_search_dashboards", "description": "Search dashboards" },
+    { "name": "grafana_search_folders", "description": "Search folders" },
+    { "name": "grafana_list_prometheus_metric_metadata", "description": "List Prometheus metadata" },
+    { "name": "grafana_query_prometheus", "description": "Execute PromQL query" },
+    { "name": "grafana_list_prometheus_metric_names", "description": "List metric names" },
+    { "name": "grafana_list_prometheus_label_names", "description": "List label names" },
+    { "name": "grafana_list_prometheus_label_values", "description": "Get label values" },
+    { "name": "grafana_list_loki_label_names", "description": "List Loki labels" },
+    { "name": "grafana_list_loki_label_values", "description": "Get Loki label values" },
+    { "name": "grafana_query_loki_stats", "description": "Get Loki stats" },
+    { "name": "grafana_query_loki_logs", "description": "Query Loki logs" },
+    { "name": "grafana_list_alert_rules", "description": "List alert rules" },
+    { "name": "grafana_get_alert_rule_by_uid", "description": "Get alert rule" },
+    { "name": "grafana_create_alert_rule", "description": "Create alert rule" },
+    { "name": "grafana_update_alert_rule", "description": "Update alert rule" },
+    { "name": "grafana_delete_alert_rule", "description": "Delete alert rule" },
+    { "name": "grafana_list_contact_points", "description": "List contact points" },
+    { "name": "grafana_get_annotations", "description": "Get annotations" },
+    { "name": "grafana_create_annotation", "description": "Create annotation" },
+    { "name": "grafana_create_graphite_annotation", "description": "Create Graphite annotation" },
+    { "name": "grafana_update_annotation", "description": "Update annotation" },
+    { "name": "grafana_patch_annotation", "description": "Patch annotation" },
+    { "name": "grafana_get_annotation_tags", "description": "Get annotation tags" },
+    { "name": "grafana_list_oncall_schedules", "description": "List OnCall schedules" },
+    { "name": "grafana_get_oncall_shift", "description": "Get OnCall shift" },
+    { "name": "grafana_get_current_oncall_users", "description": "Get current on-call users" },
+    { "name": "grafana_list_oncall_teams", "description": "List OnCall teams" },
+    { "name": "grafana_list_oncall_users", "description": "List OnCall users" },
+    { "name": "grafana_list_alert_groups", "description": "List alert groups" },
+    { "name": "grafana_get_alert_group", "description": "Get alert group" },
+    { "name": "grafana_list_incidents", "description": "List incidents" },
+    { "name": "grafana_create_incident", "description": "Create incident" },
+    { "name": "grafana_add_activity_to_incident", "description": "Add activity to incident" },
+    { "name": "grafana_get_incident", "description": "Get incident" },
+    { "name": "grafana_get_sift_investigation", "description": "Get Sift investigation" },
+    { "name": "grafana_get_sift_analysis", "description": "Get Sift analysis" },
+    { "name": "grafana_list_sift_investigations", "description": "List Sift investigations" },
+    { "name": "grafana_find_error_pattern_logs", "description": "Find error patterns" },
+    { "name": "grafana_find_slow_requests", "description": "Find slow requests" },
+    { "name": "grafana_list_pyroscope_label_names", "description": "List Pyroscope labels" },
+    { "name": "grafana_list_pyroscope_label_values", "description": "Get Pyroscope label values" },
+    { "name": "grafana_list_pyroscope_profile_types", "description": "List profile types" },
+    { "name": "grafana_fetch_pyroscope_profile", "description": "Fetch profile" },
+    { "name": "grafana_list_teams", "description": "List teams" },
+    { "name": "grafana_list_users_by_org", "description": "List org users" },
+    { "name": "grafana_list_all_roles", "description": "List all roles" },
+    { "name": "grafana_get_role_details", "description": "Get role details" },
+    { "name": "grafana_get_role_assignments", "description": "Get role assignments" },
+    { "name": "grafana_list_user_roles", "description": "List user roles" },
+    { "name": "grafana_list_team_roles", "description": "List team roles" },
+    { "name": "grafana_get_resource_permissions", "description": "Get resource permissions" },
+    { "name": "grafana_get_resource_description", "description": "Get resource description" },
+    { "name": "grafana_create_folder", "description": "Create folder" },
+    { "name": "grafana_generate_deeplink", "description": "Generate deeplink" }
+  ]
+}

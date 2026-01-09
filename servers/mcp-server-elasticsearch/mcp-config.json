@@ -1,0 +1,69 @@
+{
+  "name": "mcp-server-elasticsearch",
+  "version": "1.0.0",
+  "description": "MCP server for Elasticsearch - search, query, and manage indices",
+  "port": 3009,
+  "auth": {
+    "type": "api_key | basic",
+    "required": [
+      {
+        "header": "x-elasticsearch-url",
+        "description": "Elasticsearch instance URL"
+      }
+    ],
+    "methods": [
+      {
+        "type": "api_key",
+        "label": "API Key",
+        "headers": [
+          {
+            "header": "x-elasticsearch-api-key",
+            "description": "Elasticsearch API key"
+          }
+        ]
+      },
+      {
+        "type": "basic",
+        "label": "Basic Auth",
+        "headers": [
+          {
+            "header": "x-elasticsearch-username",
+            "description": "Elasticsearch username"
+          },
+          {
+            "header": "x-elasticsearch-password",
+            "description": "Elasticsearch password"
+          }
+        ]
+      }
+    ],
+    "optional": [
+      {
+        "header": "x-elasticsearch-skip-ssl",
+        "description": "Set to 'true' to skip SSL verification"
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "elasticsearch_list_indices",
+      "description": "List all available Elasticsearch indices"
+    },
+    {
+      "name": "elasticsearch_get_mappings",
+      "description": "Get field mappings for a specific index"
+    },
+    {
+      "name": "elasticsearch_search",
+      "description": "Execute search using Query DSL"
+    },
+    {
+      "name": "elasticsearch_esql",
+      "description": "Execute ES|QL query"
+    },
+    {
+      "name": "elasticsearch_get_shards",
+      "description": "Get shard information for all or specific indices"
+    }
+  ]
+}

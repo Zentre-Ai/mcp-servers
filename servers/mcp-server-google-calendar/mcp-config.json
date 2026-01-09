@@ -1,0 +1,49 @@
+{
+  "name": "mcp-server-google-calendar",
+  "version": "1.0.0",
+  "description": "MCP server for Google Calendar - manage calendars and events",
+  "port": 3003,
+  "auth": {
+    "type": "oauth",
+    "label": "Google OAuth",
+    "required": [],
+    "methods": [
+      {
+        "type": "oauth",
+        "label": "OAuth Access Token",
+        "headers": [
+          {
+            "header": "x-google-calendar-token",
+            "description": "Google Calendar OAuth access token"
+          }
+        ]
+      },
+      {
+        "type": "bearer",
+        "label": "Bearer Token",
+        "headers": [
+          {
+            "header": "Authorization",
+            "description": "Bearer token (Authorization: Bearer <token>)"
+          }
+        ]
+      }
+    ]
+  },
+  "tools": [
+    { "name": "calendar_list_calendars", "description": "List all calendars" },
+    { "name": "calendar_get_calendar", "description": "Get a specific calendar" },
+    { "name": "calendar_create_calendar", "description": "Create a new calendar" },
+    { "name": "calendar_update_calendar", "description": "Update a calendar" },
+    { "name": "calendar_delete_calendar", "description": "Delete a calendar" },
+    { "name": "calendar_list_events", "description": "List events in a calendar" },
+    { "name": "calendar_get_event", "description": "Get a specific event" },
+    { "name": "calendar_create_event", "description": "Create a new event" },
+    { "name": "calendar_update_event", "description": "Update an event" },
+    { "name": "calendar_delete_event", "description": "Delete an event" },
+    { "name": "calendar_quick_add", "description": "Quick add event from text" },
+    { "name": "calendar_list_acl", "description": "List calendar access control" },
+    { "name": "calendar_add_acl", "description": "Add calendar access rule" },
+    { "name": "calendar_remove_acl", "description": "Remove calendar access rule" }
+  ]
+}

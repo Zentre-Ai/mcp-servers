@@ -1,0 +1,60 @@
+{
+  "name": "mcp-server-jira",
+  "version": "1.0.0",
+  "description": "MCP server for Jira - issues, projects, sprints, and users",
+  "port": 3005,
+  "auth": {
+    "type": "basic",
+    "label": "Jira API Token",
+    "required": [
+      {
+        "header": "x-jira-url",
+        "description": "Jira instance URL (e.g., https://your-domain.atlassian.net)"
+      }
+    ],
+    "methods": [
+      {
+        "type": "api_token",
+        "label": "API Token",
+        "headers": [
+          {
+            "header": "x-jira-email",
+            "description": "Jira account email"
+          },
+          {
+            "header": "x-jira-api-token",
+            "description": "Jira API token"
+          }
+        ]
+      }
+    ]
+  },
+  "tools": [
+    { "name": "jira_get_issue", "description": "Get issue details" },
+    { "name": "jira_create_issue", "description": "Create a new issue" },
+    { "name": "jira_update_issue", "description": "Update an issue" },
+    { "name": "jira_delete_issue", "description": "Delete an issue" },
+    { "name": "jira_get_transitions", "description": "Get available transitions" },
+    { "name": "jira_transition_issue", "description": "Transition issue status" },
+    { "name": "jira_add_comment", "description": "Add comment to issue" },
+    { "name": "jira_get_comments", "description": "Get issue comments" },
+    { "name": "jira_assign_issue", "description": "Assign issue to user" },
+    { "name": "jira_search", "description": "Search issues with JQL" },
+    { "name": "jira_my_issues", "description": "Get my assigned issues" },
+    { "name": "jira_recent_issues", "description": "Get recently updated issues" },
+    { "name": "jira_sprint_issues", "description": "Get issues in a sprint" },
+    { "name": "jira_epic_issues", "description": "Get issues in an epic" },
+    { "name": "jira_get_myself", "description": "Get current user info" },
+    { "name": "jira_get_user", "description": "Get user by account ID" },
+    { "name": "jira_search_users", "description": "Search for users" },
+    { "name": "jira_assignable_users", "description": "Get assignable users" },
+    { "name": "jira_get_project_roles", "description": "Get project roles" },
+    { "name": "jira_list_projects", "description": "List all projects" },
+    { "name": "jira_get_project", "description": "Get project details" },
+    { "name": "jira_get_issue_types", "description": "Get project issue types" },
+    { "name": "jira_get_components", "description": "Get project components" },
+    { "name": "jira_get_versions", "description": "Get project versions" },
+    { "name": "jira_get_sprints", "description": "Get board sprints" },
+    { "name": "jira_get_boards", "description": "Get all boards" }
+  ]
+}

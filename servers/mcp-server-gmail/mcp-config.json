@@ -1,0 +1,54 @@
+{
+  "name": "mcp-server-gmail",
+  "version": "1.0.0",
+  "description": "MCP server for Gmail - send, read, and manage emails",
+  "port": 3002,
+  "auth": {
+    "type": "oauth",
+    "label": "Google OAuth",
+    "required": [],
+    "methods": [
+      {
+        "type": "oauth",
+        "label": "OAuth Access Token",
+        "headers": [
+          {
+            "header": "x-gmail-token",
+            "description": "Gmail OAuth access token"
+          }
+        ]
+      },
+      {
+        "type": "bearer",
+        "label": "Bearer Token",
+        "headers": [
+          {
+            "header": "Authorization",
+            "description": "Bearer token (Authorization: Bearer <token>)"
+          }
+        ]
+      }
+    ]
+  },
+  "tools": [
+    { "name": "gmail_list_messages", "description": "List messages in the mailbox" },
+    { "name": "gmail_get_message", "description": "Get a specific message by ID" },
+    { "name": "gmail_send_message", "description": "Send an email message" },
+    { "name": "gmail_search_messages", "description": "Search messages with query" },
+    { "name": "gmail_trash_message", "description": "Move message to trash" },
+    { "name": "gmail_untrash_message", "description": "Remove message from trash" },
+    { "name": "gmail_modify_labels", "description": "Add or remove labels from message" },
+    { "name": "gmail_delete_message", "description": "Permanently delete a message" },
+    { "name": "gmail_list_labels", "description": "List all labels" },
+    { "name": "gmail_get_label", "description": "Get a specific label" },
+    { "name": "gmail_create_label", "description": "Create a new label" },
+    { "name": "gmail_update_label", "description": "Update a label" },
+    { "name": "gmail_delete_label", "description": "Delete a label" },
+    { "name": "gmail_list_drafts", "description": "List all drafts" },
+    { "name": "gmail_get_draft", "description": "Get a specific draft" },
+    { "name": "gmail_create_draft", "description": "Create a new draft" },
+    { "name": "gmail_update_draft", "description": "Update an existing draft" },
+    { "name": "gmail_send_draft", "description": "Send a draft" },
+    { "name": "gmail_delete_draft", "description": "Delete a draft" }
+  ]
+}
