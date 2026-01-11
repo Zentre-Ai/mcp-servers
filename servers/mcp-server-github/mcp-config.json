@@ -4,17 +4,27 @@
   "description": "MCP server for GitHub - repos, issues, pull requests, and branches",
   "port": 3006,
   "auth": {
-    "type": "token",
-    "label": "GitHub Personal Access Token",
+    "type": "oauth",
+    "label": "GitHub OAuth",
     "required": [],
     "methods": [
       {
-        "type": "token",
-        "label": "Personal Access Token",
+        "type": "oauth",
+        "label": "OAuth Access Token",
         "headers": [
           {
             "header": "x-github-token",
-            "description": "GitHub personal access token"
+            "description": "GitHub OAuth access token"
+          }
+        ]
+      },
+      {
+        "type": "bearer",
+        "label": "Bearer Token",
+        "headers": [
+          {
+            "header": "Authorization",
+            "description": "Bearer token (Authorization: Bearer <token>)"
           }
         ]
       }

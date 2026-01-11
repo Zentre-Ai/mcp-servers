@@ -4,17 +4,27 @@
   "description": "MCP server for Notion - pages, databases, blocks, and comments",
   "port": 3001,
   "auth": {
-    "type": "token",
-    "label": "Notion Integration Token",
+    "type": "oauth",
+    "label": "Notion OAuth",
     "required": [],
     "methods": [
       {
-        "type": "token",
-        "label": "Integration Token",
+        "type": "oauth",
+        "label": "OAuth Access Token",
         "headers": [
           {
             "header": "x-notion-token",
-            "description": "Notion integration token (secret_...)"
+            "description": "Notion OAuth access token"
+          }
+        ]
+      },
+      {
+        "type": "bearer",
+        "label": "Bearer Token",
+        "headers": [
+          {
+            "header": "Authorization",
+            "description": "Bearer token (Authorization: Bearer <token>)"
           }
         ]
       }

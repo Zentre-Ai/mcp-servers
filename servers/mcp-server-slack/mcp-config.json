@@ -4,17 +4,27 @@
   "description": "MCP server for Slack - channels, messages, users, and reactions",
   "port": 3004,
   "auth": {
-    "type": "token",
-    "label": "Slack Bot Token",
+    "type": "oauth",
+    "label": "Slack OAuth",
     "required": [],
     "methods": [
       {
-        "type": "token",
-        "label": "Bot Token",
+        "type": "oauth",
+        "label": "OAuth Access Token",
         "headers": [
           {
             "header": "x-slack-token",
-            "description": "Slack Bot OAuth token (xoxb-...)"
+            "description": "Slack OAuth access token"
+          }
+        ]
+      },
+      {
+        "type": "bearer",
+        "label": "Bearer Token",
+        "headers": [
+          {
+            "header": "Authorization",
+            "description": "Bearer token (Authorization: Bearer <token>)"
           }
         ]
       }
