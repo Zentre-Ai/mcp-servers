@@ -4,17 +4,27 @@
   "description": "MCP server for Miro - boards, items, shapes, connectors, and mind maps",
   "port": 3007,
   "auth": {
-    "type": "token",
-    "label": "Miro Access Token",
+    "type": "oauth",
+    "label": "Miro OAuth",
     "required": [],
     "methods": [
       {
-        "type": "token",
-        "label": "Access Token",
+        "type": "oauth",
+        "label": "OAuth Access Token",
         "headers": [
           {
             "header": "x-miro-token",
             "description": "Miro OAuth access token"
+          }
+        ]
+      },
+      {
+        "type": "bearer",
+        "label": "Bearer Token",
+        "headers": [
+          {
+            "header": "Authorization",
+            "description": "Bearer token (Authorization: Bearer <token>)"
           }
         ]
       }
