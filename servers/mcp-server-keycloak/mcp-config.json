@@ -1,0 +1,40 @@
+{
+  "name": "mcp-server-keycloak",
+  "version": "1.0.0",
+  "description": "MCP server for Keycloak identity and access management",
+  "port": 3010,
+  "auth": {
+    "type": "oauth",
+    "label": "Keycloak OAuth",
+    "required": [],
+    "methods": [
+      {
+        "type": "bearer",
+        "label": "Bearer Token",
+        "headers": [
+          {
+            "header": "Authorization",
+            "description": "Bearer token from Keycloak OIDC (Authorization: Bearer <access_token>)"
+          }
+        ]
+      }
+    ]
+  },
+  "tools": [
+    { "name": "keycloak_get_users", "description": "List users with optional filtering" },
+    { "name": "keycloak_get_user", "description": "Get a user by ID" },
+    { "name": "keycloak_create_user", "description": "Create a new user" },
+    { "name": "keycloak_update_user", "description": "Update an existing user" },
+    { "name": "keycloak_delete_user", "description": "Delete a user" },
+    { "name": "keycloak_reset_password", "description": "Reset a user's password" },
+    { "name": "keycloak_get_groups", "description": "List all groups" },
+    { "name": "keycloak_get_group_members", "description": "Get members of a group" },
+    { "name": "keycloak_add_user_to_group", "description": "Add a user to a group" },
+    { "name": "keycloak_remove_user_from_group", "description": "Remove a user from a group" },
+    { "name": "keycloak_get_realm_roles", "description": "List realm roles" },
+    { "name": "keycloak_get_user_roles", "description": "Get roles assigned to a user" },
+    { "name": "keycloak_add_role_to_user", "description": "Add a realm role to a user" },
+    { "name": "keycloak_remove_role_from_user", "description": "Remove a realm role from a user" },
+    { "name": "keycloak_get_realms", "description": "List available realms" }
+  ]
+}
