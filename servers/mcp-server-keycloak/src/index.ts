@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
-import { createServer, IncomingMessage, ServerResponse } from "http";
+import { createServer, IncomingMessage, ServerResponse } from "node:http";
 import { server, registerHandlers, setCurrentToken } from "./server.js";
 import { extractBearerToken } from "./utils/keycloak-client.js";
 import { config } from "./config.js";
@@ -10,6 +10,7 @@ import { logger } from "./utils/logger.js";
 /**
  * Start the MCP server with HTTP transport.
  * Access token is extracted from request headers for each request.
+ * Keycloak URL and realm are extracted from the token's issuer claim.
  */
 async function startHttpServer(port: number): Promise<void> {
   logger.info(`Starting Keycloak MCP server on port ${port}`);
@@ -99,9 +100,7 @@ async function startHttpServer(port: number): Promise<void> {
     logger.info("Authentication:");
     logger.info("  Authorization: Bearer <keycloak_access_token>");
     logger.info("");
-    logger.info("Keycloak Configuration:");
-    logger.info(`  URL: ${config.KEYCLOAK_URL}`);
-    logger.info(`  Realm: ${config.KEYCLOAK_REALM}`);
+    logger.info("Note: Keycloak URL and realm are extracted from the token's issuer claim");
   });
 }
 
