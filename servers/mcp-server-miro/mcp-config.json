@@ -2,6 +2,7 @@
   "name": "mcp-server-miro",
   "version": "1.0.0",
   "description": "MCP server for Miro - boards, items, shapes, connectors, and mind maps",
+  "categories": ["Collaboration"],
   "port": 3007,
   "auth": {
     "type": "oauth",

@@ -2,6 +2,7 @@
   "name": "mcp-server-gmail",
   "version": "1.0.0",
   "description": "MCP server for Gmail - send, read, and manage emails",
+  "categories": ["Communication"],
   "port": 3002,
   "auth": {
     "type": "oauth",

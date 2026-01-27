@@ -2,6 +2,7 @@
   "name": "mcp-server-grafana",
   "version": "1.0.0",
   "description": "MCP server for Grafana - dashboards, datasources, alerts, and observability",
+  "categories": ["Observability"],
   "port": 3008,
   "auth": {
     "type": "token",
