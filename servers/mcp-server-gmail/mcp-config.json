@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "MCP server for Gmail - send, read, and manage emails",
   "categories": ["Communication"],
+  "tutorial": "## Gmail Setup\n\n### Using OAuth (Recommended)\n\nThis server uses Google OAuth for authentication. The access token is obtained through the OAuth flow.\n\n### Required OAuth Scopes\n\nWhen setting up OAuth, request these scopes:\n- `https://www.googleapis.com/auth/gmail.readonly` - Read emails\n- `https://www.googleapis.com/auth/gmail.send` - Send emails\n- `https://www.googleapis.com/auth/gmail.modify` - Modify emails and labels\n- `https://www.googleapis.com/auth/gmail.labels` - Manage labels\n\nOr use the full access scope:\n- `https://mail.google.com/` - Full Gmail access\n\n### Setting Up Google Cloud Project\n\n1. Go to [console.cloud.google.com](https://console.cloud.google.com)\n2. Create or select a project\n3. Enable the **Gmail API**\n4. Configure **OAuth consent screen**\n5. Create **OAuth 2.0 credentials**\n6. Use the credentials in your OAuth flow to obtain access tokens",
   "port": 3002,
   "auth": {
     "type": "oauth",

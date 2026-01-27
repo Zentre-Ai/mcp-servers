@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "MCP server for Google Calendar - manage calendars and events",
   "categories": ["Productivity"],
+  "tutorial": "## Google Calendar Setup\n\n### Using OAuth (Recommended)\n\nThis server uses Google OAuth for authentication. The access token is obtained through the OAuth flow.\n\n### Required OAuth Scopes\n\nWhen setting up OAuth, request these scopes:\n- `https://www.googleapis.com/auth/calendar.readonly` - Read calendars and events\n- `https://www.googleapis.com/auth/calendar.events` - Manage events\n- `https://www.googleapis.com/auth/calendar` - Full calendar access\n\n### Setting Up Google Cloud Project\n\n1. Go to [console.cloud.google.com](https://console.cloud.google.com)\n2. Create or select a project\n3. Enable the **Google Calendar API**\n4. Configure **OAuth consent screen**\n5. Create **OAuth 2.0 credentials**\n6. Use the credentials in your OAuth flow to obtain access tokens\n\n### Calendar Access\n\nThe authenticated user will have access to:\n- Their primary calendar\n- Calendars shared with them\n- Calendars they have been granted access to",
   "port": 3003,
   "auth": {
     "type": "oauth",

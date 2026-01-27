@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "MCP server for Notion - pages, databases, blocks, and comments",
   "categories": ["Productivity"],
+  "tutorial": "## Notion Setup\n\n### Using OAuth (Recommended)\n\nThis server uses Notion OAuth for authentication.\n\n### Setting Up a Notion Integration\n\n1. Go to [notion.so/my-integrations](https://www.notion.so/my-integrations)\n2. Click **+ New integration**\n3. Enter a name and select the workspace\n4. Set capabilities:\n   - **Read content** - Read pages and databases\n   - **Update content** - Edit pages and databases\n   - **Insert content** - Create new pages/blocks\n   - **Read comments** - Read page comments\n   - **Create comments** - Add comments to pages\n5. Click **Submit**\n6. Copy the **Internal Integration Token** (starts with `ntn_`)\n\n### Connecting Pages to Your Integration\n\n**Important**: After creating the integration, you must share pages with it:\n\n1. Open a Notion page or database\n2. Click **•••** (top right) → **Connections**\n3. Search for your integration name\n4. Click to connect\n\nThe integration can only access pages explicitly shared with it.",
   "port": 3001,
   "auth": {
     "type": "oauth",

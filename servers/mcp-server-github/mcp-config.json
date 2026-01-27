@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "MCP server for GitHub - repos, issues, pull requests, and branches",
   "categories": ["Developer Tools"],
+  "tutorial": "## GitHub Setup\n\n### Creating a Personal Access Token\n\n1. Go to [github.com/settings/tokens](https://github.com/settings/tokens)\n2. Click **Generate new token** → **Fine-grained token** (recommended)\n3. Set a token name and expiration\n4. Select the repositories you want to access\n5. Grant required permissions:\n   - **Repository permissions**: Contents, Issues, Pull requests, Metadata\n   - **Account permissions**: Read access to profile (optional)\n6. Click **Generate token** and copy it\n\n### Using OAuth\n\nIf your application uses GitHub OAuth:\n1. The OAuth flow will provide an access token\n2. Use this token in the `x-github-token` header\n\n### Required Scopes\n\n- `repo` - Full repository access\n- `read:user` - Read user profile\n- `read:org` - Read organization data (for org features)",
   "port": 3006,
   "auth": {
     "type": "oauth",

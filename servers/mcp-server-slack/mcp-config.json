@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "MCP server for Slack - channels, messages, users, and reactions",
   "categories": ["Communication"],
+  "tutorial": "## Slack Setup\n\n### Using OAuth (Recommended)\n\nThis server uses Slack OAuth for authentication.\n\n### Creating a Slack App\n\n1. Go to [api.slack.com/apps](https://api.slack.com/apps)\n2. Click **Create New App** → **From scratch**\n3. Enter app name and select workspace\n4. Go to **OAuth & Permissions**\n\n### Required OAuth Scopes\n\nAdd these **User Token Scopes**:\n- `channels:read`, `channels:write` - Public channels\n- `groups:read`, `groups:write` - Private channels\n- `chat:write` - Send messages\n- `im:read`, `im:write` - Direct messages\n- `users:read` - User information\n- `search:read` - Search messages\n- `reactions:read`, `reactions:write` - Reactions\n\n### Installing the App\n\n1. Go to **Install App** in your app settings\n2. Click **Install to Workspace**\n3. Authorize the requested permissions\n4. Copy the **User OAuth Token** (starts with `xoxp-`)\n\n### Bot vs User Tokens\n\nThis server uses **User tokens** for full access to channels and messages as the authenticated user.",
   "port": 3004,
   "auth": {
     "type": "oauth",
