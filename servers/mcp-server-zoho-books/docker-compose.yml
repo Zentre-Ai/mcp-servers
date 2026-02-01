@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  mcp-server-zoho-books:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3007:3000"
+    environment:
+      - PORT=3000
+      - LOG_LEVEL=info
+      # OAuth 2.0 Configuration (optional - required for OAuth flow)
+      # - ZOHO_CLIENT_ID=your-client-id
+      # - ZOHO_CLIENT_SECRET=your-client-secret
+      # - OAUTH_REDIRECT_URI=http://localhost:3007/oauth/callback
+      # - OAUTH_SCOPES=ZohoBooks.fullaccess.all
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s

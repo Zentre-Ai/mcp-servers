@@ -1,0 +1,48 @@
+{
+  "name": "mcp-server-zoho-people",
+  "version": "1.0.0",
+  "description": "MCP server for Zoho People HR management with OAuth 2.0 authentication and multi-datacenter support",
+  "categories": ["HR", "Human Resources"],
+  "tutorial": "## Zoho People OAuth 2.0 Setup\n\n### Creating a Zoho OAuth 2.0 App\n\n1. Go to [api-console.zoho.com](https://api-console.zoho.com)\n2. Click **Add Client** > **Server-based Applications**\n3. Enter your application details\n4. Add a callback URL (e.g., `http://localhost:3008/oauth/callback`)\n5. Under **Scopes**, add the required Zoho People scopes\n6. Copy your **Client ID** and **Client Secret**\n\n### Multi-Datacenter Support\n\nZoho operates in multiple geographic datacenters:\n- **com** - United States\n- **eu** - Europe\n- **in** - India\n- **com.au** - Australia\n- **jp** - Japan\n- **com.cn** - China\n\nSpecify the datacenter using the `?dc=` query parameter during authorization.\n\n### OAuth Flow\n\n1. Call `GET /oauth/authorize?dc=com` to get the authorization URL\n2. User visits the URL and grants permission\n3. Exchange the code via `POST /oauth/callback` with `{ code, redirectUri, datacenter }`\n4. Use the access token with `Authorization: Zoho-oauthtoken <token>` header\n5. Optionally include `x-zoho-datacenter` header (default: com)",
+  "port": 3008,
+  "auth": {
+    "type": "oauth2",
+    "label": "Zoho People OAuth 2.0",
+    "oauth2": {
+      "authorizationUrl": "https://accounts.zoho.com/oauth/v2/auth",
+      "tokenUrl": "https://accounts.zoho.com/oauth/v2/token",
+      "scopes": ["ZOHOPEOPLE.forms.ALL", "ZOHOPEOPLE.employee.ALL", "ZOHOPEOPLE.attendance.ALL", "ZOHOPEOPLE.leave.ALL"],
+      "pkce": false,
+      "multiDatacenter": true,
+      "datacenters": ["com", "eu", "in", "com.au", "jp", "com.cn"]
+    },
+    "optional": [
+      {
+        "header": "x-zoho-datacenter",
+        "description": "Zoho datacenter (com, eu, in, com.au, jp, com.cn)",
+        "default": "com"
+      }
+    ]
+  },
+  "tools": [
+    { "name": "zoho_people_list_employees", "description": "List employees with filters" },
+    { "name": "zoho_people_get_employee", "description": "Get employee details" },
+    { "name": "zoho_people_add_employee", "description": "Add a new employee" },
+    { "name": "zoho_people_update_employee", "description": "Update an employee" },
+    { "name": "zoho_people_search_employees", "description": "Search employees by criteria" },
+    { "name": "zoho_people_checkin", "description": "Record employee check-in" },
+    { "name": "zoho_people_checkout", "description": "Record employee check-out" },
+    { "name": "zoho_people_get_attendance", "description": "Get attendance for an employee" },
+    { "name": "zoho_people_get_attendance_report", "description": "Get attendance report" },
+    { "name": "zoho_people_bulk_import_attendance", "description": "Bulk import attendance records" },
+    { "name": "zoho_people_list_leave_types", "description": "List available leave types" },
+    { "name": "zoho_people_get_leave_balance", "description": "Get leave balance for employee" },
+    { "name": "zoho_people_apply_leave", "description": "Apply for leave" },
+    { "name": "zoho_people_get_leave_requests", "description": "Get leave requests" },
+    { "name": "zoho_people_approve_leave", "description": "Approve or reject leave request" },
+    { "name": "zoho_people_list_forms", "description": "List available forms" },
+    { "name": "zoho_people_get_form_records", "description": "Get records from a form" },
+    { "name": "zoho_people_add_form_record", "description": "Add a record to a form" },
+    { "name": "zoho_people_update_form_record", "description": "Update a form record" }
+  ]
+}
