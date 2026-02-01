@@ -42,7 +42,7 @@ async function startHttpServer(port: number): Promise<void> {
     // Health check endpoint
     if (url.pathname === "/health" && req.method === "GET") {
       res.writeHead(200, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({ status: "ok", server: "mcp-server-jira" }));
+      res.end(JSON.stringify({ status: "ok", server: "mcp-server-jira-datacenter" }));
       return;
     }
 

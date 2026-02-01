@@ -1,15 +1,20 @@
 version: "3.8"
 
 services:
-  mcp-server-jira:
+  mcp-server-jira-cloud:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3005:3000"
+      - "3006:3000"
     environment:
       - PORT=3000
       - LOG_LEVEL=info
+      # OAuth 2.0 Configuration (optional - required for OAuth flow)
+      # - ATLASSIAN_CLIENT_ID=your-client-id
+      # - ATLASSIAN_CLIENT_SECRET=your-client-secret
+      # - OAUTH_REDIRECT_URI=http://localhost:3006/oauth/callback
+      # - OAUTH_SCOPES=read:jira-work write:jira-work read:jira-user offline_access
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/health"]

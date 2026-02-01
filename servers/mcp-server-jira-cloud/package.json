@@ -1,11 +1,11 @@
 {
-  "name": "mcp-server-jira",
+  "name": "mcp-server-jira-cloud",
   "version": "1.0.0",
-  "description": "MCP server for Jira with dynamic token authentication",
+  "description": "MCP server for Jira Cloud with OAuth 2.0 (3LO) authentication",
   "type": "module",
   "main": "build/index.js",
   "bin": {
-    "mcp-server-jira": "./build/index.js"
+    "mcp-server-jira-cloud": "./build/index.js"
   },
   "scripts": {
     "dev": "tsx src/index.ts",

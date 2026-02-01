@@ -1,6 +1,8 @@
-# Jira MCP Server
+# Jira Data Center/Server MCP Server
 
-A Model Context Protocol (MCP) server for Jira integration with dynamic authentication.
+A Model Context Protocol (MCP) server for Jira Data Center/Server integration with dynamic authentication. Also supports Jira Cloud with API tokens.
+
+> **Note**: For Jira Cloud with OAuth 2.0 authentication, see [mcp-server-jira-cloud](../mcp-server-jira-cloud/).
 
 ## Features
 
@@ -16,19 +18,19 @@ A Model Context Protocol (MCP) server for Jira integration with dynamic authenti
 
 This server supports two authentication methods via HTTP headers:
 
-### Option 1: API Token (Recommended for Jira Cloud)
+### Option 1: API Token (Jira Cloud or Data Center PAT)
 
 | Header | Description |
 |--------|-------------|
-| `x-jira-host` | Your Jira host (e.g., `your-domain.atlassian.net`) |
-| `x-jira-email` | Your Atlassian account email |
-| `x-jira-token` | Your API token |
+| `x-jira-host` | Your Jira host (e.g., `jira.yourcompany.com` or `your-domain.atlassian.net`) |
+| `x-jira-email` | Your Jira account email |
+| `x-jira-token` | Your API token or Personal Access Token |
 
-### Option 2: OAuth 2.0 Bearer Token
+### Option 2: Bearer Token
 
 | Header | Description |
 |--------|-------------|
-| `x-jira-host` | Your Jira host (e.g., `your-domain.atlassian.net`) |
+| `x-jira-host` | Your Jira host |
 | `Authorization` | Bearer token |
 
 ### Example Request
@@ -36,16 +38,16 @@ This server supports two authentication methods via HTTP headers:
 ```bash
 # Using API Token
 curl -X POST http://localhost:3000/mcp \
-  -H "x-jira-host: your-domain.atlassian.net" \
+  -H "x-jira-host: jira.yourcompany.com" \
   -H "x-jira-email: your-email@example.com" \
   -H "x-jira-token: your-api-token" \
   -H "Content-Type: application/json" \
   -d '{"jsonrpc": "2.0", "method": "tools/list", "id": 1}'
 
-# Using OAuth Bearer
+# Using Bearer Token
 curl -X POST http://localhost:3000/mcp \
-  -H "x-jira-host: your-domain.atlassian.net" \
-  -H "Authorization: Bearer your-oauth-token" \
+  -H "x-jira-host: jira.yourcompany.com" \
+  -H "Authorization: Bearer your-bearer-token" \
   -H "Content-Type: application/json" \
   -d '{"jsonrpc": "2.0", "method": "tools/list", "id": 1}'
 ```
@@ -128,8 +130,8 @@ npm start
 docker-compose up -d
 
 # Or build manually
-docker build -t mcp-server-jira .
-docker run -p 3005:3000 mcp-server-jira
+docker build -t mcp-server-jira-datacenter .
+docker run -p 3005:3000 mcp-server-jira-datacenter
 ```
 
 ### Endpoints
@@ -152,7 +154,7 @@ docker run -p 3005:3000 mcp-server-jira
 
 ```bash
 curl -X POST http://localhost:3000/mcp \
-  -H "x-jira-host: your-domain.atlassian.net" \
+  -H "x-jira-host: jira.yourcompany.com" \
   -H "x-jira-email: your-email@example.com" \
   -H "x-jira-token: your-api-token" \
   -H "Content-Type: application/json" \
@@ -177,7 +179,7 @@ curl -X POST http://localhost:3000/mcp \
 
 ```bash
 curl -X POST http://localhost:3000/mcp \
-  -H "x-jira-host: your-domain.atlassian.net" \
+  -H "x-jira-host: jira.yourcompany.com" \
   -H "x-jira-email: your-email@example.com" \
   -H "x-jira-token: your-api-token" \
   -H "Content-Type: application/json" \
@@ -189,48 +191,6 @@ curl -X POST http://localhost:3000/mcp \
       "arguments": {
         "jql": "project = PROJ AND status = \"In Progress\" ORDER BY updated DESC",
         "maxResults": 10
-      }
-    },
-    "id": 1
-  }'
-```
-
-### Transition Issue Status
-
-```bash
-# First get available transitions
-curl -X POST http://localhost:3000/mcp \
-  -H "x-jira-host: your-domain.atlassian.net" \
-  -H "x-jira-email: your-email@example.com" \
-  -H "x-jira-token: your-api-token" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "jsonrpc": "2.0",
-    "method": "tools/call",
-    "params": {
-      "name": "jira_get_transitions",
-      "arguments": {
-        "issueIdOrKey": "PROJ-123"
-      }
-    },
-    "id": 1
-  }'
-
-# Then transition using the ID
-curl -X POST http://localhost:3000/mcp \
-  -H "x-jira-host: your-domain.atlassian.net" \
-  -H "x-jira-email: your-email@example.com" \
-  -H "x-jira-token: your-api-token" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "jsonrpc": "2.0",
-    "method": "tools/call",
-    "params": {
-      "name": "jira_transition_issue",
-      "arguments": {
-        "issueIdOrKey": "PROJ-123",
-        "transitionId": "31",
-        "comment": "Moving to In Progress"
       }
     },
     "id": 1
@@ -250,22 +210,22 @@ curl -X POST http://localhost:3000/mcp \
 | `labels = "bug"` | Issues with bug label |
 | `"Epic Link" = PROJ-100` | Issues in an epic |
 
-## Docker Ports
+## Getting Credentials
 
-| Server | Port |
-|--------|------|
-| mcp-server-notion | 3001 |
-| mcp-server-gmail | 3002 |
-| mcp-server-google-calendar | 3003 |
-| mcp-server-slack | 3004 |
-| mcp-server-jira | 3005 |
-
-## Getting an API Token
+### Jira Cloud (API Token)
 
 1. Go to https://id.atlassian.com/manage-profile/security/api-tokens
 2. Click "Create API token"
 3. Give it a name and copy the token
 4. Use your Atlassian account email and this token for authentication
+
+### Jira Data Center (Personal Access Token)
+
+For Jira Data Center 8.14+:
+1. Go to your profile settings in Jira
+2. Click "Personal Access Tokens"
+3. Create a new token with appropriate permissions
+4. Use this token with bearer authentication
 
 ## License
 

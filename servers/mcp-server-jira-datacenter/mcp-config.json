@@ -1,17 +1,17 @@
 {
-  "name": "mcp-server-jira",
+  "name": "mcp-server-jira-datacenter",
   "version": "1.0.0",
-  "description": "MCP server for Jira - issues, projects, sprints, and users",
+  "description": "MCP server for Jira Data Center/Server - issues, projects, sprints, and users",
   "categories": ["Project Management"],
-  "tutorial": "## Jira Setup\n\n### Getting Your Jira URL\n\nYour Jira URL is your Atlassian instance address:\n- **Cloud**: `https://your-domain.atlassian.net`\n- **Server/Data Center**: Your self-hosted Jira URL\n\n### Creating an API Token\n\n1. Go to [id.atlassian.com/manage-profile/security/api-tokens](https://id.atlassian.com/manage-profile/security/api-tokens)\n2. Click **Create API token**\n3. Enter a label (e.g., \"MCP Server\")\n4. Click **Create** and copy the token\n\n### Required Information\n\n- **Jira URL**: Your Atlassian instance URL\n- **Email**: The email address associated with your Atlassian account\n- **API Token**: The token you created above\n\n### Permissions\n\nThe API token inherits your account permissions. Ensure your account has access to the projects you want to manage.",
+  "tutorial": "## Jira Data Center/Server Setup\n\n### Getting Your Jira URL\n\nYour Jira URL is your self-hosted Jira instance address (e.g., `https://jira.yourcompany.com`).\n\nThis server also supports Jira Cloud with API tokens.\n\n### Creating an API Token (Jira Cloud)\n\n1. Go to [id.atlassian.com/manage-profile/security/api-tokens](https://id.atlassian.com/manage-profile/security/api-tokens)\n2. Click **Create API token**\n3. Enter a label (e.g., \"MCP Server\")\n4. Click **Create** and copy the token\n\n### Personal Access Token (Jira Data Center)\n\nFor Jira Data Center 8.14+:\n1. Go to your profile settings\n2. Click **Personal Access Tokens**\n3. Create a new token\n\n### Required Information\n\n- **Jira URL**: Your Jira instance URL\n- **Email**: Your Jira account email (for Cloud)\n- **API Token**: The token you created above\n\n### Permissions\n\nThe API token inherits your account permissions. Ensure your account has access to the projects you want to manage.",
   "port": 3005,
   "auth": {
     "type": "basic",
     "label": "Jira API Token",
     "required": [
       {
-        "header": "x-jira-url",
-        "description": "Jira instance URL (e.g., https://your-domain.atlassian.net)"
+        "header": "x-jira-host",
+        "description": "Jira instance URL (e.g., https://jira.yourcompany.com)"
       }
     ],
     "methods": [
@@ -24,7 +24,7 @@
             "description": "Jira account email"
           },
           {
-            "header": "x-jira-api-token",
+            "header": "x-jira-token",
             "description": "Jira API token"
           }
         ]
