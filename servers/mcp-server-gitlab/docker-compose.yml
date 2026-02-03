@@ -1,0 +1,18 @@
+version: "3.8"
+services:
+  mcp-server-gitlab:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3011:3000"
+    environment:
+      - PORT=3000
+      - LOG_LEVEL=info
+      - GITLAB_DEFAULT_HOST=gitlab.com
+      - OAUTH_DEFAULT_SCOPES=api read_user read_api read_repository write_repository
+    restart: unless-stopped
+
+# Note: OAuth credentials (client_id, client_secret) are NOT stored server-side.
+# Each customer provides their own GitLab OAuth app credentials per-request.
+# This enables multi-tenant support with unlimited GitLab instances.
