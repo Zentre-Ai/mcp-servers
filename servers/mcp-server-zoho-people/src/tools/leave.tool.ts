@@ -285,4 +285,226 @@ server.tool(
   }
 );
 
+/**
+ * Get pending leave approvals for a manager.
+ */
+server.tool(
+  "zoho_people_get_pending_approvals",
+  {
+    sdate: z.string().optional().describe("Start date filter (dd-MMM-yyyy)"),
+    edate: z.string().optional().describe("End date filter (dd-MMM-yyyy)"),
+    sIndex: z.number().optional().describe("Start index for pagination"),
+    limit: z.number().optional().describe("Number of records to fetch"),
+  },
+  async ({ sdate, edate, sIndex, limit }) => {
+    const auth = getCurrentAuth();
+    if (!auth) {
+      return { content: [{ type: "text", text: "Error: No Zoho People credentials available" }] };
+    }
+
+    try {
+      const client = createZohoPeopleClient(auth);
+
+      const params: Record<string, string | number | boolean | undefined> = {
+        approvalStatus: "Pending",
+        sIndex: sIndex || 1,
+        limit: limit || 200,
+      };
+
+      if (sdate) params.sdate = sdate;
+      if (edate) params.edate = edate;
+
+      const result = await client.get<{
+        response: {
+          result: Array<Record<string, unknown>>;
+        };
+      }>("/forms/leave/getRecords", params);
+
+      const pendingApprovals = Array.isArray(result.response?.result)
+        ? result.response.result.map((lr) => {
+            const leaveData = Object.values(lr)[0] as Record<string, unknown>;
+            return formatLeave(leaveData);
+          })
+        : [];
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(
+              {
+                status: "Pending",
+                pendingApprovals,
+                count: pendingApprovals.length,
+              },
+              null,
+              2
+            ),
+          },
+        ],
+      };
+    } catch (error) {
+      logger.error("Failed to get pending approvals", error);
+      const message = error instanceof Error ? error.message : "Unknown error";
+      return { content: [{ type: "text", text: `Error getting pending approvals: ${message}` }] };
+    }
+  }
+);
+
+/**
+ * Get team leave requests (leave requests for employees reporting to a manager).
+ */
+server.tool(
+  "zoho_people_get_team_leave_requests",
+  {
+    teamMemberIds: z.array(z.string()).describe("Array of team member user IDs"),
+    approvalStatus: z.enum(["Pending", "Approved", "Rejected", "Cancelled", "All"]).optional().describe("Filter by approval status"),
+    sdate: z.string().optional().describe("Start date filter (dd-MMM-yyyy)"),
+    edate: z.string().optional().describe("End date filter (dd-MMM-yyyy)"),
+    sIndex: z.number().optional().describe("Start index for pagination"),
+    limit: z.number().optional().describe("Number of records to fetch per member"),
+  },
+  async ({ teamMemberIds, approvalStatus, sdate, edate, sIndex, limit }) => {
+    const auth = getCurrentAuth();
+    if (!auth) {
+      return { content: [{ type: "text", text: "Error: No Zoho People credentials available" }] };
+    }
+
+    try {
+      const client = createZohoPeopleClient(auth);
+      const allLeaveRequests: Array<{ userId: string; leaves: Array<Record<string, unknown>> }> = [];
+
+      // Fetch leave requests for each team member
+      for (const userId of teamMemberIds) {
+        const params: Record<string, string | number | boolean | undefined> = {
+          userId,
+          sIndex: sIndex || 1,
+          limit: limit || 50,
+        };
+
+        if (approvalStatus && approvalStatus !== "All") params.approvalStatus = approvalStatus;
+        if (sdate) params.sdate = sdate;
+        if (edate) params.edate = edate;
+
+        try {
+          const result = await client.get<{
+            response: {
+              result: Array<Record<string, unknown>>;
+            };
+          }>("/forms/leave/getRecords", params);
+
+          const leaves = Array.isArray(result.response?.result)
+            ? result.response.result.map((lr) => {
+                const leaveData = Object.values(lr)[0] as Record<string, unknown>;
+                return formatLeave(leaveData);
+              })
+            : [];
+
+          if (leaves.length > 0) {
+            allLeaveRequests.push({ userId, leaves });
+          }
+        } catch {
+          // Continue with other team members if one fails
+          logger.warn(`Failed to get leave requests for user ${userId}`);
+        }
+      }
+
+      const totalLeaves = allLeaveRequests.reduce((sum, member) => sum + member.leaves.length, 0);
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(
+              {
+                teamLeaveRequests: allLeaveRequests,
+                teamMemberCount: teamMemberIds.length,
+                totalLeaveRequests: totalLeaves,
+              },
+              null,
+              2
+            ),
+          },
+        ],
+      };
+    } catch (error) {
+      logger.error("Failed to get team leave requests", error);
+      const message = error instanceof Error ? error.message : "Unknown error";
+      return { content: [{ type: "text", text: `Error getting team leave requests: ${message}` }] };
+    }
+  }
+);
+
+/**
+ * Get team leave summary (leave balances for all team members).
+ */
+server.tool(
+  "zoho_people_get_team_leave_summary",
+  {
+    teamMemberIds: z.array(z.string()).describe("Array of team member user IDs"),
+  },
+  async ({ teamMemberIds }) => {
+    const auth = getCurrentAuth();
+    if (!auth) {
+      return { content: [{ type: "text", text: "Error: No Zoho People credentials available" }] };
+    }
+
+    try {
+      const client = createZohoPeopleClient(auth);
+      const teamLeaveSummary: Array<{
+        userId: string;
+        leaveBalances: Array<Record<string, unknown>>;
+      }> = [];
+
+      // Fetch leave balances for each team member
+      for (const userId of teamMemberIds) {
+        try {
+          const result = await client.get<{
+            response: {
+              result: Array<Record<string, unknown>>;
+            };
+          }>("/leave/getLeaveTypeDetails", { userId });
+
+          const leaveBalances = Array.isArray(result.response?.result)
+            ? result.response.result.map((lt) => ({
+                leaveType: lt.Name || lt.name || lt.Leavetype,
+                id: lt.Id || lt.id,
+                permitted: lt.PermittedCount || lt.permittedCount,
+                balance: lt.Balance || lt.balance,
+                used: lt.Used || lt.used,
+                unit: lt.Unit || lt.unit,
+              }))
+            : [];
+
+          teamLeaveSummary.push({ userId, leaveBalances });
+        } catch {
+          // Continue with other team members if one fails
+          logger.warn(`Failed to get leave balance for user ${userId}`);
+          teamLeaveSummary.push({ userId, leaveBalances: [] });
+        }
+      }
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(
+              {
+                teamLeaveSummary,
+                teamMemberCount: teamMemberIds.length,
+              },
+              null,
+              2
+            ),
+          },
+        ],
+      };
+    } catch (error) {
+      logger.error("Failed to get team leave summary", error);
+      const message = error instanceof Error ? error.message : "Unknown error";
+      return { content: [{ type: "text", text: `Error getting team leave summary: ${message}` }] };
+    }
+  }
+);
+
 logger.info("Zoho People leave tools registered");

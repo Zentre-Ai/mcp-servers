@@ -14,7 +14,7 @@
       "authorizationUrl": "https://accounts.zoho.com/oauth/v2/auth",
       "tokenUrl": "https://accounts.zoho.com/oauth/v2/token",
       "userinfoUrl": "https://accounts.zoho.com/oauth/user/info",
-      "scopes": ["ZohoBooks.fullaccess.all"],
+      "scopes": ["ZohoBooks.fullaccess.all","email","profile","openid"],
       "pkce": false
     },
     "required": [

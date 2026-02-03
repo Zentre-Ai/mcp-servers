@@ -301,4 +301,126 @@ server.tool(
   }
 );
 
+/**
+ * Get team members (employees reporting to a manager).
+ */
+server.tool(
+  "zoho_people_get_team_members",
+  {
+    managerId: z.string().describe("Manager's employee ID or email to get their direct reports"),
+    sIndex: z.number().optional().describe("Start index for pagination (default 1)"),
+    limit: z.number().optional().describe("Number of records to fetch (max 200)"),
+  },
+  async ({ managerId, sIndex, limit }) => {
+    const auth = getCurrentAuth();
+    if (!auth) {
+      return { content: [{ type: "text", text: "Error: No Zoho People credentials available" }] };
+    }
+
+    try {
+      const client = createZohoPeopleClient(auth);
+
+      const result = await client.get<{
+        response: {
+          result: Array<Record<string, unknown>>;
+        };
+      }>("/forms/employee/getRecords", {
+        searchColumn: "Reporting_To",
+        searchValue: managerId,
+        sIndex: sIndex || 1,
+        limit: limit || 200,
+      });
+
+      const teamMembers = Array.isArray(result.response?.result)
+        ? result.response.result.map((emp) => {
+            const empData = Object.values(emp)[0] as Record<string, unknown>;
+            return formatEmployee(empData);
+          })
+        : [];
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(
+              {
+                managerId,
+                teamMembers,
+                count: teamMembers.length,
+              },
+              null,
+              2
+            ),
+          },
+        ],
+      };
+    } catch (error) {
+      logger.error("Failed to get team members", error);
+      const message = error instanceof Error ? error.message : "Unknown error";
+      return { content: [{ type: "text", text: `Error getting team members: ${message}` }] };
+    }
+  }
+);
+
+/**
+ * Get employees by department.
+ */
+server.tool(
+  "zoho_people_get_department_employees",
+  {
+    department: z.string().describe("Department name"),
+    sIndex: z.number().optional().describe("Start index for pagination (default 1)"),
+    limit: z.number().optional().describe("Number of records to fetch (max 200)"),
+  },
+  async ({ department, sIndex, limit }) => {
+    const auth = getCurrentAuth();
+    if (!auth) {
+      return { content: [{ type: "text", text: "Error: No Zoho People credentials available" }] };
+    }
+
+    try {
+      const client = createZohoPeopleClient(auth);
+
+      const result = await client.get<{
+        response: {
+          result: Array<Record<string, unknown>>;
+        };
+      }>("/forms/employee/getRecords", {
+        searchColumn: "Department",
+        searchValue: department,
+        sIndex: sIndex || 1,
+        limit: limit || 200,
+      });
+
+      const employees = Array.isArray(result.response?.result)
+        ? result.response.result.map((emp) => {
+            const empData = Object.values(emp)[0] as Record<string, unknown>;
+            return formatEmployee(empData);
+          })
+        : [];
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(
+              {
+                department,
+                employees,
+                count: employees.length,
+              },
+              null,
+              2
+            ),
+          },
+        ],
+      };
+    } catch (error) {
+      logger.error("Failed to get department employees", error);
+      const message = error instanceof Error ? error.message : "Unknown error";
+      return { content: [{ type: "text", text: `Error getting department employees: ${message}` }] };
+    }
+  }
+);
+
 logger.info("Zoho People employee tools registered");
