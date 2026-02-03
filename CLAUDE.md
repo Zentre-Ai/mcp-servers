@@ -118,7 +118,6 @@ Every MCP server must include a `mcp-config.json` file with standardized metadat
 
 **OAuth2 specific fields:**
 - `pkce`: Set to `true` if PKCE is supported (recommended)
-- `dynamicCredentials`: Set to `true` if OAuth credentials are passed per-request (multi-tenant)
 - `dynamicHost`: Set to `true` if host is dynamic (e.g., Keycloak, self-hosted GitLab)
 - `multiDatacenter`: Set to `true` if service has multiple datacenters (e.g., Zoho)
 

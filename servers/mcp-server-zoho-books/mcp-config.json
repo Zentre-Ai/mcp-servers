@@ -12,9 +12,7 @@
       "authorizationUrl": "https://accounts.zoho.com/oauth/v2/auth",
       "tokenUrl": "https://accounts.zoho.com/oauth/v2/token",
       "scopes": ["ZohoBooks.fullaccess.all"],
-      "pkce": false,
-      "multiDatacenter": true,
-      "datacenters": ["com", "eu", "in", "com.au", "jp", "com.cn"]
+      "pkce": false
     },
     "required": [
       {

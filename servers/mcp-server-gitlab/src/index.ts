@@ -85,17 +85,16 @@ async function startHttpServer(port: number): Promise<void> {
     }
 
     // ================================================================
-    // OAuth Endpoints (Dynamic Credentials - Multi-tenant)
+    // OAuth Endpoints
     // ================================================================
 
     // GET /oauth/authorize - Generate authorization URL with PKCE
     if (url.pathname === "/oauth/authorize" && req.method === "GET") {
       try {
-        // Client provides their own OAuth credentials
         const clientId = url.searchParams.get("clientId");
         const redirectUri = url.searchParams.get("redirectUri");
-        const host = url.searchParams.get("host") || config.GITLAB_DEFAULT_HOST;
-        const scopes = url.searchParams.get("scopes") || config.OAUTH_DEFAULT_SCOPES;
+        const host = url.searchParams.get("host") || "gitlab.com";
+        const scopes = url.searchParams.get("scopes") || "api read_user read_api read_repository write_repository";
 
         // Validate required parameters
         if (!clientId) {
@@ -156,7 +155,7 @@ async function startHttpServer(port: number): Promise<void> {
           clientId,
           clientSecret,
           redirectUri,
-          host = config.GITLAB_DEFAULT_HOST,
+          host = "gitlab.com",
         } = body as {
           code?: string;
           codeVerifier?: string;
@@ -240,7 +239,7 @@ async function startHttpServer(port: number): Promise<void> {
           refreshToken,
           clientId,
           clientSecret,
-          host = config.GITLAB_DEFAULT_HOST,
+          host = "gitlab.com",
         } = body as {
           refreshToken?: string;
           clientId?: string;
@@ -289,7 +288,7 @@ async function startHttpServer(port: number): Promise<void> {
           token,
           clientId,
           clientSecret,
-          host = config.GITLAB_DEFAULT_HOST,
+          host = "gitlab.com",
         } = body as {
           token?: string;
           clientId?: string;

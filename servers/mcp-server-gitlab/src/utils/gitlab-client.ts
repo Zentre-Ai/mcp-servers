@@ -1,5 +1,4 @@
 import { logger } from "./logger.js";
-import { config } from "../config.js";
 
 /**
  * GitLab authentication configuration.
@@ -144,7 +143,7 @@ export function extractGitLabAuth(
   // Extract host from header or use default
   const hostHeader = headers["x-gitlab-host"];
   const host =
-    typeof hostHeader === "string" ? hostHeader : config.GITLAB_DEFAULT_HOST;
+    typeof hostHeader === "string" ? hostHeader : "gitlab.com";
 
   return { accessToken, host };
 }
