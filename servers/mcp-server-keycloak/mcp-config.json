@@ -6,7 +6,7 @@
   "tutorial": "## Keycloak Setup\n\n### Getting an Access Token\n\nThe server automatically extracts the Keycloak URL and realm from your access token's issuer claim.\n\n#### Using OAuth/OIDC Flow\n\n1. Configure your application with Keycloak as the identity provider\n2. After authentication, use the obtained access token\n3. Pass it as `Authorization: Bearer <access_token>`\n\n#### Using Direct Access Grant (for testing)\n\n```bash\ncurl -X POST 'https://your-keycloak/realms/your-realm/protocol/openid-connect/token' \\\n  -d 'client_id=your-client' \\\n  -d 'client_secret=your-secret' \\\n  -d 'grant_type=client_credentials'\n```\n\n### Required Permissions\n\nYour token must have roles that allow:\n- `view-users`, `manage-users` - For user operations\n- `view-realm`, `manage-realm` - For realm/role operations\n- `query-groups`, `manage-groups` - For group operations\n\nThese are typically assigned through the `realm-management` client roles.",
   "port": 3010,
   "auth": {
-    "type": "oauth",
+    "type": "oauth2",
     "label": "Keycloak OAuth",
     "required": [],
     "methods": [

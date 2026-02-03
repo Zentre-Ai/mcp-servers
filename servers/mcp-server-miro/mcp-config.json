@@ -6,12 +6,12 @@
   "tutorial": "## Miro Setup\n\n### Using OAuth (Recommended)\n\nThis server uses Miro OAuth for authentication.\n\n### Creating a Miro App\n\n1. Go to [miro.com/app/settings/user-profile/apps](https://miro.com/app/settings/user-profile/apps)\n2. Click **Create new app**\n3. Enter app name and description\n4. Configure **OAuth scopes**:\n\n### Required OAuth Scopes\n\n- `boards:read` - Read board data\n- `boards:write` - Create/modify boards\n- `identity:read` - Read user identity\n- `team:read` - Read team information\n\n### Installing the App\n\n1. In your app settings, go to **Install app and get OAuth token**\n2. Select the team to install to\n3. Click **Install app**\n4. Copy the generated **Access token**\n\n### Access Levels\n\n- The token grants access to boards in the installed team\n- Board-level permissions still apply\n- Some operations require board-specific sharing permissions",
   "port": 3007,
   "auth": {
-    "type": "oauth",
+    "type": "oauth2",
     "label": "Miro OAuth",
     "required": [],
     "methods": [
       {
-        "type": "oauth",
+        "type": "oauth2",
         "label": "OAuth Access Token",
         "headers": [
           {
