@@ -10,8 +10,11 @@
     "label": "Stripe Connect OAuth 2.0",
     "description": "Connect to Stripe using OAuth 2.0 for secure payment processing",
     "oauth2": {
+      "clientId": "",
+      "clientSecret": "",
       "authorizationUrl": "https://connect.stripe.com/oauth/authorize",
       "tokenUrl": "https://connect.stripe.com/oauth/token",
+      "userinfoUrl": "https://api.stripe.com/v1/account",
       "scopes": ["read_write"],
       "pkce": false
     },

@@ -9,8 +9,11 @@
     "type": "oauth2",
     "label": "Zoho People OAuth 2.0",
     "oauth2": {
+      "clientId": "",
+      "clientSecret": "",
       "authorizationUrl": "https://accounts.zoho.com/oauth/v2/auth",
       "tokenUrl": "https://accounts.zoho.com/oauth/v2/token",
+      "userinfoUrl": "https://accounts.zoho.com/oauth/user/info",
       "scopes": ["ZOHOPEOPLE.forms.ALL", "ZOHOPEOPLE.employee.ALL", "ZOHOPEOPLE.attendance.ALL", "ZOHOPEOPLE.leave.ALL"],
       "pkce": false,
       "multiDatacenter": true,

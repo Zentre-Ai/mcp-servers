@@ -10,8 +10,11 @@
     "label": "Slack OAuth 2.0",
     "description": "OAuth 2.0 authentication for Slack API access",
     "oauth2": {
+      "clientId": "",
+      "clientSecret": "",
       "authorizationUrl": "https://slack.com/oauth/v2/authorize",
       "tokenUrl": "https://slack.com/api/oauth.v2.access",
+      "userinfoUrl": "https://slack.com/api/users.identity",
       "scopes": ["channels:read", "channels:write", "chat:write", "users:read"],
       "pkce": false
     }

@@ -10,8 +10,11 @@
     "label": "Google OAuth 2.0",
     "description": "OAuth 2.0 authentication for Gmail API access",
     "oauth2": {
+      "clientId": "",
+      "clientSecret": "",
       "authorizationUrl": "https://accounts.google.com/o/oauth2/v2/auth",
       "tokenUrl": "https://oauth2.googleapis.com/token",
+      "userinfoUrl": "https://www.googleapis.com/oauth2/v3/userinfo",
       "scopes": ["https://www.googleapis.com/auth/gmail.readonly", "https://www.googleapis.com/auth/gmail.send", "https://www.googleapis.com/auth/gmail.modify"],
       "pkce": true
     }

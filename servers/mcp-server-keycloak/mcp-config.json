@@ -10,8 +10,11 @@
     "label": "Keycloak OAuth 2.0 / OIDC",
     "description": "OAuth 2.0 / OpenID Connect authentication - URL and realm extracted from token issuer",
     "oauth2": {
+      "clientId": "",
+      "clientSecret": "",
       "authorizationUrl": "https://{host}/realms/{realm}/protocol/openid-connect/auth",
       "tokenUrl": "https://{host}/realms/{realm}/protocol/openid-connect/token",
+      "userinfoUrl": "https://{host}/realms/{realm}/protocol/openid-connect/userinfo",
       "scopes": ["openid", "profile"],
       "pkce": true,
       "dynamicHost": true

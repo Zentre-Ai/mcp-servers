@@ -10,8 +10,11 @@
     "label": "{{Name}} OAuth 2.0",
     "description": "OAuth 2.0 authentication for {{Name}} API access",
     "oauth2": {
+      "clientId": "",
+      "clientSecret": "",
       "authorizationUrl": "https://example.com/oauth/authorize",
       "tokenUrl": "https://example.com/oauth/token",
+      "userinfoUrl": "https://example.com/oauth/userinfo",
       "scopes": ["read", "write"],
       "pkce": true
     },

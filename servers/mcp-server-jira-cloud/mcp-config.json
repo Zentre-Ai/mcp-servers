@@ -9,8 +9,11 @@
     "type": "oauth2",
     "label": "Jira Cloud OAuth 2.0",
     "oauth2": {
+      "clientId": "",
+      "clientSecret": "",
       "authorizationUrl": "https://auth.atlassian.com/authorize",
       "tokenUrl": "https://auth.atlassian.com/oauth/token",
+      "userinfoUrl": "https://api.atlassian.com/me",
       "scopes": ["read:jira-work", "write:jira-work", "read:jira-user", "offline_access"],
       "pkce": true
     },

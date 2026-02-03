@@ -10,8 +10,11 @@
     "label": "Notion OAuth 2.0",
     "description": "OAuth 2.0 authentication for Notion API access",
     "oauth2": {
+      "clientId": "",
+      "clientSecret": "",
       "authorizationUrl": "https://api.notion.com/v1/oauth/authorize",
       "tokenUrl": "https://api.notion.com/v1/oauth/token",
+      "userinfoUrl": "https://api.notion.com/v1/users/me",
       "scopes": [],
       "pkce": false
     }

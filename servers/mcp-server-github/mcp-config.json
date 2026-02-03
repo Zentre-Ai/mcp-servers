@@ -10,8 +10,11 @@
     "label": "GitHub OAuth 2.0",
     "description": "OAuth 2.0 authentication for GitHub API access",
     "oauth2": {
+      "clientId": "",
+      "clientSecret": "",
       "authorizationUrl": "https://github.com/login/oauth/authorize",
       "tokenUrl": "https://github.com/login/oauth/access_token",
+      "userinfoUrl": "https://api.github.com/user",
       "scopes": ["repo", "read:user", "read:org"],
       "pkce": true
     }
