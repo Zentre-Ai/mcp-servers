@@ -1,0 +1,12 @@
+version: "3.8"
+services:
+  mcp-server-gitlab:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3011:3000"
+    environment:
+      - PORT=3000
+      - LOG_LEVEL=info
+    restart: unless-stopped

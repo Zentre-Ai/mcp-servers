@@ -2,21 +2,23 @@
   "name": "mcp-server-elasticsearch",
   "version": "1.0.0",
   "description": "MCP server for Elasticsearch - search, query, and manage indices",
-  "categories": ["Search"],
+  "categories": ["Developer Tools"],
   "tutorial": "## Elasticsearch Setup\n\n### Getting Your Elasticsearch URL\n\n1. For **Elastic Cloud**:\n   - Log in to [cloud.elastic.co](https://cloud.elastic.co)\n   - Select your deployment\n   - Copy the **Elasticsearch endpoint** URL\n\n2. For **Self-hosted**:\n   - Use your Elasticsearch server URL (e.g., `https://localhost:9200`)\n\n### Authentication Options\n\n#### Option 1: API Key (Recommended)\n\n1. Go to **Kibana** → **Stack Management** → **API Keys**\n2. Click **Create API key**\n3. Name your key and set appropriate permissions\n4. Copy the generated API key\n\n#### Option 2: Basic Auth\n\n- Use your Elasticsearch username and password\n- Default superuser is `elastic` (password set during setup)\n\n### Optional: Skip SSL Verification\n\nSet `x-elasticsearch-skip-ssl` to `true` for self-signed certificates (development only).",
   "port": 3009,
   "auth": {
-    "type": "api_key | basic",
+    "type": "api_key",
+    "label": "Elasticsearch Authentication",
+    "description": "API key (recommended) or basic auth for Elasticsearch access",
     "required": [
       {
         "header": "x-elasticsearch-url",
         "description": "Elasticsearch instance URL"
       }
     ],
-    "methods": [
+    "oneOf": [
       {
         "type": "api_key",
-        "label": "API Key",
+        "label": "API Key (Recommended)",
         "headers": [
           {
             "header": "x-elasticsearch-api-key",

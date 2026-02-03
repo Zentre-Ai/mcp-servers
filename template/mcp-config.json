@@ -1,0 +1,27 @@
+{
+  "name": "mcp-server-{{name}}",
+  "version": "1.0.0",
+  "description": "MCP server for {{Name}} - brief description of capabilities",
+  "categories": ["Category"],
+  "tutorial": "## {{Name}} Setup\n\n### Authentication\n\nDescribe how to obtain credentials...\n\n### OAuth Flow (if applicable)\n\n1. Call `GET /oauth/authorize` to get authorization URL\n2. User grants permission\n3. Exchange code via `POST /oauth/callback`\n4. Use token with `Authorization: Bearer <token>` header",
+  "port": 3000,
+  "auth": {
+    "type": "oauth2",
+    "label": "{{Name}} OAuth 2.0",
+    "description": "OAuth 2.0 authentication for {{Name}} API access",
+    "oauth2": {
+      "clientId": "",
+      "clientSecret": "",
+      "authorizationUrl": "https://example.com/oauth/authorize",
+      "tokenUrl": "https://example.com/oauth/token",
+      "userinfoUrl": "https://example.com/oauth/userinfo",
+      "scopes": ["read", "write"],
+      "pkce": true
+    },
+    "required": [],
+    "optional": []
+  },
+  "tools": [
+    { "name": "{{prefix}}_example_tool", "description": "Example tool description" }
+  ]
+}

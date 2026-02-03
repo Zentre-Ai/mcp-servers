@@ -2,35 +2,22 @@
   "name": "mcp-server-gmail",
   "version": "1.0.0",
   "description": "MCP server for Gmail - send, read, and manage emails",
-  "categories": ["Communication"],
+  "categories": ["Google"],
   "tutorial": "## Gmail Setup\n\n### Using OAuth (Recommended)\n\nThis server uses Google OAuth for authentication. The access token is obtained through the OAuth flow.\n\n### Required OAuth Scopes\n\nWhen setting up OAuth, request these scopes:\n- `https://www.googleapis.com/auth/gmail.readonly` - Read emails\n- `https://www.googleapis.com/auth/gmail.send` - Send emails\n- `https://www.googleapis.com/auth/gmail.modify` - Modify emails and labels\n- `https://www.googleapis.com/auth/gmail.labels` - Manage labels\n\nOr use the full access scope:\n- `https://mail.google.com/` - Full Gmail access\n\n### Setting Up Google Cloud Project\n\n1. Go to [console.cloud.google.com](https://console.cloud.google.com)\n2. Create or select a project\n3. Enable the **Gmail API**\n4. Configure **OAuth consent screen**\n5. Create **OAuth 2.0 credentials**\n6. Use the credentials in your OAuth flow to obtain access tokens",
   "port": 3002,
   "auth": {
-    "type": "oauth",
-    "label": "Google OAuth",
-    "required": [],
-    "methods": [
-      {
-        "type": "oauth",
-        "label": "OAuth Access Token",
-        "headers": [
-          {
-            "header": "x-gmail-token",
-            "description": "Gmail OAuth access token"
-          }
-        ]
-      },
-      {
-        "type": "bearer",
-        "label": "Bearer Token",
-        "headers": [
-          {
-            "header": "Authorization",
-            "description": "Bearer token (Authorization: Bearer <token>)"
-          }
-        ]
-      }
-    ]
+    "type": "oauth2",
+    "label": "Google OAuth 2.0",
+    "description": "OAuth 2.0 authentication for Gmail API access",
+    "oauth2": {
+      "clientId": "",
+      "clientSecret": "",
+      "authorizationUrl": "https://accounts.google.com/o/oauth2/v2/auth",
+      "tokenUrl": "https://oauth2.googleapis.com/token",
+      "userinfoUrl": "https://www.googleapis.com/oauth2/v3/userinfo",
+      "scopes": ["https://www.googleapis.com/auth/gmail.readonly", "https://www.googleapis.com/auth/gmail.send", "https://www.googleapis.com/auth/gmail.modify"],
+      "pkce": true
+    }
   },
   "tools": [
     { "name": "gmail_list_messages", "description": "List messages in the mailbox" },

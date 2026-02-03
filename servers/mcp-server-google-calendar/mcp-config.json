@@ -2,35 +2,22 @@
   "name": "mcp-server-google-calendar",
   "version": "1.0.0",
   "description": "MCP server for Google Calendar - manage calendars and events",
-  "categories": ["Productivity"],
+  "categories": ["Google"],
   "tutorial": "## Google Calendar Setup\n\n### Using OAuth (Recommended)\n\nThis server uses Google OAuth for authentication. The access token is obtained through the OAuth flow.\n\n### Required OAuth Scopes\n\nWhen setting up OAuth, request these scopes:\n- `https://www.googleapis.com/auth/calendar.readonly` - Read calendars and events\n- `https://www.googleapis.com/auth/calendar.events` - Manage events\n- `https://www.googleapis.com/auth/calendar` - Full calendar access\n\n### Setting Up Google Cloud Project\n\n1. Go to [console.cloud.google.com](https://console.cloud.google.com)\n2. Create or select a project\n3. Enable the **Google Calendar API**\n4. Configure **OAuth consent screen**\n5. Create **OAuth 2.0 credentials**\n6. Use the credentials in your OAuth flow to obtain access tokens\n\n### Calendar Access\n\nThe authenticated user will have access to:\n- Their primary calendar\n- Calendars shared with them\n- Calendars they have been granted access to",
   "port": 3003,
   "auth": {
-    "type": "oauth",
-    "label": "Google OAuth",
-    "required": [],
-    "methods": [
-      {
-        "type": "oauth",
-        "label": "OAuth Access Token",
-        "headers": [
-          {
-            "header": "x-google-calendar-token",
-            "description": "Google Calendar OAuth access token"
-          }
-        ]
-      },
-      {
-        "type": "bearer",
-        "label": "Bearer Token",
-        "headers": [
-          {
-            "header": "Authorization",
-            "description": "Bearer token (Authorization: Bearer <token>)"
-          }
-        ]
-      }
-    ]
+    "type": "oauth2",
+    "label": "Google OAuth 2.0",
+    "description": "OAuth 2.0 authentication for Google Calendar API access",
+    "oauth2": {
+      "clientId": "",
+      "clientSecret": "",
+      "authorizationUrl": "https://accounts.google.com/o/oauth2/v2/auth",
+      "tokenUrl": "https://oauth2.googleapis.com/token",
+      "userinfoUrl": "https://www.googleapis.com/oauth2/v3/userinfo",
+      "scopes": ["https://www.googleapis.com/auth/calendar", "https://www.googleapis.com/auth/calendar.events"],
+      "pkce": true
+    }
   },
   "tools": [
     { "name": "calendar_list_calendars", "description": "List all calendars" },

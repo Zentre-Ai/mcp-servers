@@ -2,35 +2,22 @@
   "name": "mcp-server-miro",
   "version": "1.0.0",
   "description": "MCP server for Miro - boards, items, shapes, connectors, and mind maps",
-  "categories": ["Collaboration"],
+  "categories": ["Design"],
   "tutorial": "## Miro Setup\n\n### Using OAuth (Recommended)\n\nThis server uses Miro OAuth for authentication.\n\n### Creating a Miro App\n\n1. Go to [miro.com/app/settings/user-profile/apps](https://miro.com/app/settings/user-profile/apps)\n2. Click **Create new app**\n3. Enter app name and description\n4. Configure **OAuth scopes**:\n\n### Required OAuth Scopes\n\n- `boards:read` - Read board data\n- `boards:write` - Create/modify boards\n- `identity:read` - Read user identity\n- `team:read` - Read team information\n\n### Installing the App\n\n1. In your app settings, go to **Install app and get OAuth token**\n2. Select the team to install to\n3. Click **Install app**\n4. Copy the generated **Access token**\n\n### Access Levels\n\n- The token grants access to boards in the installed team\n- Board-level permissions still apply\n- Some operations require board-specific sharing permissions",
   "port": 3007,
   "auth": {
-    "type": "oauth",
-    "label": "Miro OAuth",
-    "required": [],
-    "methods": [
-      {
-        "type": "oauth",
-        "label": "OAuth Access Token",
-        "headers": [
-          {
-            "header": "x-miro-token",
-            "description": "Miro OAuth access token"
-          }
-        ]
-      },
-      {
-        "type": "bearer",
-        "label": "Bearer Token",
-        "headers": [
-          {
-            "header": "Authorization",
-            "description": "Bearer token (Authorization: Bearer <token>)"
-          }
-        ]
-      }
-    ]
+    "type": "oauth2",
+    "label": "Miro OAuth 2.0",
+    "description": "OAuth 2.0 authentication for Miro API access",
+    "oauth2": {
+      "clientId": "",
+      "clientSecret": "",
+      "authorizationUrl": "https://miro.com/oauth/authorize",
+      "tokenUrl": "https://api.miro.com/v1/oauth/token",
+      "userinfoUrl": "https://api.miro.com/v1/users/me",
+      "scopes": ["boards:read", "boards:write", "identity:read"],
+      "pkce": true
+    }
   },
   "tools": [
     { "name": "miro_list_boards", "description": "List all boards" },

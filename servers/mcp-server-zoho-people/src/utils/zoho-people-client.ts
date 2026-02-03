@@ -177,24 +177,24 @@ export class ZohoPeopleClient {
 /**
  * Extract Zoho People credentials from request headers.
  * Expects:
- *   - Authorization: Zoho-oauthtoken <accessToken>
+ *   - Authorization: Bearer <accessToken>
  *   - x-zoho-datacenter: <datacenter> (optional, defaults to 'com')
  */
 export function extractZohoPeopleAuth(
   headers: Record<string, string | string[] | undefined>
 ): ZohoPeopleAuth | null {
-  // Extract Zoho OAuth token
+  // Extract Bearer token from Authorization header
   const authHeader = headers["authorization"];
   if (!authHeader || typeof authHeader !== "string") {
     return null;
   }
 
-  // Match Zoho-oauthtoken format
-  const zohoMatch = authHeader.match(/^Zoho-oauthtoken\s+(.+)$/i);
-  if (!zohoMatch) {
+  // Match Bearer token format (OAuth2 standard)
+  const bearerMatch = authHeader.match(/^Bearer\s+(.+)$/i);
+  if (!bearerMatch) {
     return null;
   }
-  const accessToken = zohoMatch[1];
+  const accessToken = bearerMatch[1];
 
   // Extract datacenter (optional, defaults to 'com')
   const datacenter = (headers["x-zoho-datacenter"] as ZohoDatacenter) || "com";

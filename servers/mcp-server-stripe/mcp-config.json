@@ -1,0 +1,74 @@
+{
+  "name": "mcp-server-stripe",
+  "version": "1.0.0",
+  "description": "MCP server for Stripe - payment processing, subscriptions, invoices, and financial operations",
+  "categories": ["Payments"],
+  "tutorial": "## Stripe API Key Setup\n\n### Getting Your Stripe API Key\n\n1. Go to [Stripe Dashboard](https://dashboard.stripe.com/apikeys)\n2. Copy your **Secret Key** (starts with `sk_test_` for test mode or `sk_live_` for live mode)\n\n### Test vs Live Mode\n\n- **Test mode** (`sk_test_*`): Use for development and testing\n- **Live mode** (`sk_live_*`): Use for production with real payments\n\n### Required Permissions\n\nThe API key provides full access to your Stripe account. For restricted access:\n1. Go to **Developers > API keys > Restricted keys**\n2. Create a key with only the permissions you need\n\n### Security Best Practices\n\n- Never expose your secret key in client-side code\n- Use test mode keys during development\n- Rotate keys periodically\n- Use restricted keys when possible",
+  "port": 3010,
+  "auth": {
+    "type": "api_key",
+    "label": "Stripe API Key",
+    "description": "Secret API key for Stripe API access",
+    "required": [
+      {
+        "header": "x-stripe-api-key",
+        "description": "Your Stripe API key. We recommend using a restricted access key."
+      }
+    ],
+    "optional": [
+      {
+        "header": "x-stripe-account",
+        "description": "Stripe Account ID for connected accounts (e.g., acct_xxx)"
+      }
+    ]
+  },
+  "tools": [
+    { "name": "stripe_list_customers", "description": "List customers with pagination and filters" },
+    { "name": "stripe_get_customer", "description": "Get a customer by ID" },
+    { "name": "stripe_create_customer", "description": "Create a new customer" },
+    { "name": "stripe_update_customer", "description": "Update an existing customer" },
+    { "name": "stripe_delete_customer", "description": "Delete a customer" },
+    { "name": "stripe_search_customers", "description": "Search customers using query language" },
+    { "name": "stripe_list_payment_intents", "description": "List payment intents with pagination" },
+    { "name": "stripe_get_payment_intent", "description": "Get a payment intent by ID" },
+    { "name": "stripe_create_payment_intent", "description": "Create a payment intent" },
+    { "name": "stripe_confirm_payment_intent", "description": "Confirm a payment intent" },
+    { "name": "stripe_cancel_payment_intent", "description": "Cancel a payment intent" },
+    { "name": "stripe_capture_payment_intent", "description": "Capture a payment intent" },
+    { "name": "stripe_search_payment_intents", "description": "Search payment intents" },
+    { "name": "stripe_list_subscriptions", "description": "List subscriptions with filters" },
+    { "name": "stripe_get_subscription", "description": "Get a subscription by ID" },
+    { "name": "stripe_create_subscription", "description": "Create a subscription" },
+    { "name": "stripe_update_subscription", "description": "Update a subscription" },
+    { "name": "stripe_cancel_subscription", "description": "Cancel a subscription" },
+    { "name": "stripe_resume_subscription", "description": "Resume a paused subscription" },
+    { "name": "stripe_search_subscriptions", "description": "Search subscriptions" },
+    { "name": "stripe_list_invoices", "description": "List invoices with filters" },
+    { "name": "stripe_get_invoice", "description": "Get an invoice by ID" },
+    { "name": "stripe_create_invoice", "description": "Create an invoice" },
+    { "name": "stripe_create_invoice_item", "description": "Add item to draft invoice" },
+    { "name": "stripe_finalize_invoice", "description": "Finalize a draft invoice" },
+    { "name": "stripe_pay_invoice", "description": "Pay an invoice" },
+    { "name": "stripe_send_invoice", "description": "Send invoice for manual payment" },
+    { "name": "stripe_void_invoice", "description": "Void an invoice" },
+    { "name": "stripe_search_invoices", "description": "Search invoices" },
+    { "name": "stripe_list_products", "description": "List products with filters" },
+    { "name": "stripe_get_product", "description": "Get a product by ID" },
+    { "name": "stripe_create_product", "description": "Create a product" },
+    { "name": "stripe_update_product", "description": "Update a product" },
+    { "name": "stripe_delete_product", "description": "Delete a product" },
+    { "name": "stripe_search_products", "description": "Search products" },
+    { "name": "stripe_list_prices", "description": "List prices with filters" },
+    { "name": "stripe_get_price", "description": "Get a price by ID" },
+    { "name": "stripe_create_price", "description": "Create a price" },
+    { "name": "stripe_update_price", "description": "Update a price" },
+    { "name": "stripe_search_prices", "description": "Search prices" },
+    { "name": "stripe_get_balance", "description": "Get account balance" },
+    { "name": "stripe_list_balance_transactions", "description": "List balance transactions" },
+    { "name": "stripe_get_balance_transaction", "description": "Get balance transaction by ID" },
+    { "name": "stripe_list_payouts", "description": "List payouts with filters" },
+    { "name": "stripe_get_payout", "description": "Get a payout by ID" },
+    { "name": "stripe_create_payout", "description": "Create a payout" },
+    { "name": "stripe_cancel_payout", "description": "Cancel a payout" }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "name": "mcp-server-gitlab",
+  "version": "1.0.0",
+  "description": "MCP server for GitLab - supports GitLab.com and self-hosted instances with OAuth 2.0 (PKCE) authentication",
+  "categories": ["Developer Tools"],
+  "tutorial": "## GitLab OAuth 2.0 Setup\n\n### Creating a GitLab OAuth Application\n\n**For GitLab.com:**\n1. Go to [gitlab.com/-/profile/applications](https://gitlab.com/-/profile/applications)\n2. Click **Add new application**\n3. Fill in:\n   - **Name**: Your app name (e.g., 'MCP Server')\n   - **Redirect URI**: Your callback URL (e.g., `http://localhost:3011/oauth/callback`)\n   - **Confidential**: Yes (checked)\n   - **Scopes**: Select `api`, `read_user`, `read_api`, `read_repository`, `write_repository`\n4. Click **Save application**\n5. Copy the **Application ID** and **Secret**\n\n**For Self-Hosted GitLab:**\n1. Go to `https://your-gitlab.com/-/profile/applications`\n2. Follow the same steps as above\n\n### OAuth Flow\n\n1. Call `GET /oauth/authorize` to get authorization URL\n2. User visits the URL and grants permission\n3. Exchange the code via `POST /oauth/callback`\n4. Use the access token with `Authorization: Bearer <token>` header\n5. Optionally include `x-gitlab-host: your-gitlab.com` header for self-hosted instances",
+  "port": 3011,
+  "auth": {
+    "type": "oauth2",
+    "label": "GitLab OAuth 2.0",
+    "description": "OAuth 2.0 authentication for GitLab API access",
+    "oauth2": {
+      "clientId": "",
+      "clientSecret": "",
+      "authorizationUrl": "https://gitlab.com/oauth/authorize",
+      "tokenUrl": "https://gitlab.com/oauth/token",
+      "userinfoUrl": "https://gitlab.com/oauth/userinfo",
+      "scopes": ["api", "read_user", "read_api", "read_repository", "write_repository"],
+      "pkce": true
+    },
+    "optional": [
+      {
+        "header": "x-gitlab-host",
+        "description": "GitLab host (defaults to gitlab.com)"
+      }
+    ]
+  },
+  "tools": [
+    { "name": "gitlab_get_current_user", "description": "Get current authenticated user" },
+    { "name": "gitlab_get_user", "description": "Get user by ID" },
+    { "name": "gitlab_search_users", "description": "Search for users" },
+    { "name": "gitlab_list_groups", "description": "List groups" },
+    { "name": "gitlab_get_group", "description": "Get group by ID or path" },
+    { "name": "gitlab_list_projects", "description": "List projects" },
+    { "name": "gitlab_get_project", "description": "Get project by ID or path" },
+    { "name": "gitlab_create_project", "description": "Create a new project" },
+    { "name": "gitlab_update_project", "description": "Update a project" },
+    { "name": "gitlab_delete_project", "description": "Delete a project" },
+    { "name": "gitlab_fork_project", "description": "Fork a project" },
+    { "name": "gitlab_star_project", "description": "Star a project" },
+    { "name": "gitlab_unstar_project", "description": "Unstar a project" },
+    { "name": "gitlab_list_project_members", "description": "List project members" },
+    { "name": "gitlab_list_issues", "description": "List issues in a project" },
+    { "name": "gitlab_get_issue", "description": "Get issue by IID" },
+    { "name": "gitlab_create_issue", "description": "Create a new issue" },
+    { "name": "gitlab_update_issue", "description": "Update an issue" },
+    { "name": "gitlab_close_issue", "description": "Close an issue" },
+    { "name": "gitlab_reopen_issue", "description": "Reopen an issue" },
+    { "name": "gitlab_delete_issue", "description": "Delete an issue" },
+    { "name": "gitlab_list_issue_notes", "description": "List issue comments" },
+    { "name": "gitlab_create_issue_note", "description": "Add comment to issue" },
+    { "name": "gitlab_list_merge_requests", "description": "List merge requests" },
+    { "name": "gitlab_get_merge_request", "description": "Get merge request by IID" },
+    { "name": "gitlab_create_merge_request", "description": "Create a merge request" },
+    { "name": "gitlab_update_merge_request", "description": "Update a merge request" },
+    { "name": "gitlab_merge_merge_request", "description": "Merge a merge request" },
+    { "name": "gitlab_approve_merge_request", "description": "Approve a merge request" },
+    { "name": "gitlab_unapprove_merge_request", "description": "Remove approval from merge request" },
+    { "name": "gitlab_list_mr_commits", "description": "List merge request commits" },
+    { "name": "gitlab_list_mr_changes", "description": "List merge request file changes" },
+    { "name": "gitlab_list_mr_notes", "description": "List merge request comments" },
+    { "name": "gitlab_create_mr_note", "description": "Add comment to merge request" },
+    { "name": "gitlab_list_branches", "description": "List branches" },
+    { "name": "gitlab_get_branch", "description": "Get branch details" },
+    { "name": "gitlab_create_branch", "description": "Create a branch" },
+    { "name": "gitlab_delete_branch", "description": "Delete a branch" },
+    { "name": "gitlab_protect_branch", "description": "Protect a branch" },
+    { "name": "gitlab_unprotect_branch", "description": "Unprotect a branch" },
+    { "name": "gitlab_list_commits", "description": "List commits" },
+    { "name": "gitlab_get_commit", "description": "Get commit details" },
+    { "name": "gitlab_get_commit_diff", "description": "Get commit diff" }
+  ]
+}

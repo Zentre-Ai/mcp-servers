@@ -6,31 +6,18 @@
   "tutorial": "## GitHub Setup\n\n### Creating a Personal Access Token\n\n1. Go to [github.com/settings/tokens](https://github.com/settings/tokens)\n2. Click **Generate new token** → **Fine-grained token** (recommended)\n3. Set a token name and expiration\n4. Select the repositories you want to access\n5. Grant required permissions:\n   - **Repository permissions**: Contents, Issues, Pull requests, Metadata\n   - **Account permissions**: Read access to profile (optional)\n6. Click **Generate token** and copy it\n\n### Using OAuth\n\nIf your application uses GitHub OAuth:\n1. The OAuth flow will provide an access token\n2. Use this token in the `x-github-token` header\n\n### Required Scopes\n\n- `repo` - Full repository access\n- `read:user` - Read user profile\n- `read:org` - Read organization data (for org features)",
   "port": 3006,
   "auth": {
-    "type": "oauth",
-    "label": "GitHub OAuth",
-    "required": [],
-    "methods": [
-      {
-        "type": "oauth",
-        "label": "OAuth Access Token",
-        "headers": [
-          {
-            "header": "x-github-token",
-            "description": "GitHub OAuth access token"
-          }
-        ]
-      },
-      {
-        "type": "bearer",
-        "label": "Bearer Token",
-        "headers": [
-          {
-            "header": "Authorization",
-            "description": "Bearer token (Authorization: Bearer <token>)"
-          }
-        ]
-      }
-    ]
+    "type": "oauth2",
+    "label": "GitHub OAuth 2.0",
+    "description": "OAuth 2.0 authentication for GitHub API access",
+    "oauth2": {
+      "clientId": "",
+      "clientSecret": "",
+      "authorizationUrl": "https://github.com/login/oauth/authorize",
+      "tokenUrl": "https://github.com/login/oauth/access_token",
+      "userinfoUrl": "https://api.github.com/user",
+      "scopes": ["repo", "read:user", "read:org"],
+      "pkce": true
+    }
   },
   "tools": [
     { "name": "github_list_repos", "description": "List repositories" },

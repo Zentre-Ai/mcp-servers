@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  mcp-server-stripe:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3010:3000"
+    environment:
+      - PORT=3000
+      - LOG_LEVEL=info
+      # OAuth 2.0 Configuration (required for OAuth flow)
+      # - STRIPE_CLIENT_ID=ca_xxxxxxxxxxxx
+      # - STRIPE_SECRET_KEY=sk_test_xxxxxxxxxxxx
+      # - OAUTH_REDIRECT_URI=http://localhost:3010/oauth/callback
+      # - OAUTH_SCOPES=read_write
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
