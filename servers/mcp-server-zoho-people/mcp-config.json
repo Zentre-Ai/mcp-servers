@@ -2,7 +2,7 @@
   "name": "mcp-server-zoho-people",
   "version": "1.0.0",
   "description": "MCP server for Zoho People HR management with OAuth 2.0 authentication and multi-datacenter support",
-  "categories": ["HR", "Human Resources"],
+  "categories": ["HR"],
   "tutorial": "## Zoho People OAuth 2.0 Setup\n\n### Creating a Zoho OAuth 2.0 App\n\n1. Go to [api-console.zoho.com](https://api-console.zoho.com)\n2. Click **Add Client** > **Server-based Applications**\n3. Enter your application details\n4. Add a callback URL (e.g., `http://localhost:3008/oauth/callback`)\n5. Under **Scopes**, add the required Zoho People scopes\n6. Copy your **Client ID** and **Client Secret**\n\n### Multi-Datacenter Support\n\nZoho operates in multiple geographic datacenters:\n- **com** - United States\n- **eu** - Europe\n- **in** - India\n- **com.au** - Australia\n- **jp** - Japan\n- **com.cn** - China\n\nSpecify the datacenter using the `?dc=` query parameter during authorization.\n\n### OAuth Flow\n\n1. Call `GET /oauth/authorize?dc=com` to get the authorization URL\n2. User visits the URL and grants permission\n3. Exchange the code via `POST /oauth/callback` with `{ code, redirectUri, datacenter }`\n4. Use the access token with `Authorization: Zoho-oauthtoken <token>` header\n5. Optionally include `x-zoho-datacenter` header (default: com)",
   "port": 3008,
   "auth": {

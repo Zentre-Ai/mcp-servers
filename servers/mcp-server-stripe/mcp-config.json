@@ -2,7 +2,7 @@
   "name": "mcp-server-stripe",
   "version": "1.0.0",
   "description": "MCP server for Stripe - payment processing, subscriptions, invoices, and financial operations with OAuth 2.0 (Stripe Connect) authentication",
-  "categories": ["Finance", "Payments"],
+  "categories": ["Payments"],
   "tutorial": "## Stripe OAuth 2.0 Setup (Stripe Connect)\n\n### Creating a Stripe Connect Application\n\n1. Go to [Stripe Dashboard](https://dashboard.stripe.com/settings/connect)\n2. Under **Settings > Connect settings**, enable Stripe Connect\n3. Configure your platform:\n   - **Platform name**: Your application name\n   - **Redirect URIs**: Add your callback URL (e.g., `http://localhost:3010/oauth/callback`)\n4. Note your **Client ID** (starts with `ca_`)\n5. Get your **Secret Key** from [API keys](https://dashboard.stripe.com/apikeys)\n\n### OAuth Flow\n\n1. Call `GET /oauth/authorize?redirect_uri=YOUR_URI` to get authorization URL\n2. User visits the URL and authorizes your app\n3. Exchange the code via `POST /oauth/callback` with `{ \"code\": \"ac_xxx\" }`\n4. Use the access token with `Authorization: Bearer <token>` header\n5. Optionally include `x-stripe-account: acct_xxx` header for connected accounts\n\n### Scopes\n\n- `read_write`: Full access to connected account\n- `read_only`: Read-only access to connected account",
   "port": 3010,
   "auth": {

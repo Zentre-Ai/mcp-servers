@@ -2,7 +2,7 @@
   "name": "mcp-server-gitlab",
   "version": "1.0.0",
   "description": "MCP server for GitLab - supports GitLab.com and self-hosted instances with OAuth 2.0 (PKCE) authentication",
-  "categories": ["Source Control", "DevOps"],
+  "categories": ["DevOps"],
   "tutorial": "## GitLab OAuth 2.0 Setup\n\n### Creating a GitLab OAuth Application\n\n**For GitLab.com:**\n1. Go to [gitlab.com/-/profile/applications](https://gitlab.com/-/profile/applications)\n2. Click **Add new application**\n3. Fill in:\n   - **Name**: Your app name (e.g., 'MCP Server')\n   - **Redirect URI**: Your callback URL (e.g., `http://localhost:3011/oauth/callback`)\n   - **Confidential**: Yes (checked)\n   - **Scopes**: Select `api`, `read_user`, `read_api`, `read_repository`, `write_repository`\n4. Click **Save application**\n5. Copy the **Application ID** and **Secret**\n\n**For Self-Hosted GitLab:**\n1. Go to `https://your-gitlab.com/-/profile/applications`\n2. Follow the same steps as above\n\n### OAuth Flow (Multi-tenant - Dynamic Credentials)\n\n1. Call `GET /oauth/authorize?clientId=YOUR_ID&redirectUri=YOUR_URI` to get authorization URL\n2. User visits the URL and grants permission\n3. Exchange the code via `POST /oauth/callback` with `clientId`, `clientSecret`, `codeVerifier`\n4. Use the access token with `Authorization: Bearer <token>` header\n5. Optionally include `x-gitlab-host: your-gitlab.com` header for self-hosted",
   "port": 3011,
   "auth": {
