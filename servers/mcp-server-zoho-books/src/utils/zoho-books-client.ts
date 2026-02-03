@@ -6,7 +6,7 @@ import { getDatacenterConfig, ZohoDatacenter } from "./datacenters.js";
  */
 export interface ZohoBooksAuth {
   accessToken: string;
-  organizationId: string;
+  organizationId?: string;
   datacenter: ZohoDatacenter;
 }
 
@@ -16,7 +16,7 @@ export interface ZohoBooksAuth {
 export class ZohoBooksClient {
   private baseUrl: string;
   private accessToken: string;
-  private organizationId: string;
+  private organizationId?: string;
 
   constructor(auth: ZohoBooksAuth) {
     const dcConfig = getDatacenterConfig(auth.datacenter);
@@ -35,7 +35,9 @@ export class ZohoBooksClient {
     queryParams?: Record<string, string | number | boolean | undefined>
   ): Promise<T> {
     const params = new URLSearchParams();
-    params.append("organization_id", this.organizationId);
+    if (this.organizationId) {
+      params.append("organization_id", this.organizationId);
+    }
 
     // Add query parameters
     if (queryParams) {
@@ -104,36 +106,37 @@ export class ZohoBooksClient {
 /**
  * Extract Zoho Books credentials from request headers.
  * Expects:
- *   - Authorization: Zoho-oauthtoken <accessToken>
- *   - x-zoho-organization-id: <organizationId>
+ *   - Authorization: Bearer <accessToken>
+ *   - x-zoho-organization-id: <organizationId> (optional)
  *   - x-zoho-datacenter: <datacenter> (optional, defaults to 'com')
  */
 export function extractZohoBooksAuth(
   headers: Record<string, string | string[] | undefined>
 ): ZohoBooksAuth | null {
-  // Extract Zoho OAuth token
+  // Extract Bearer token from Authorization header
   const authHeader = headers["authorization"];
   if (!authHeader || typeof authHeader !== "string") {
     return null;
   }
 
-  // Match Zoho-oauthtoken format
-  const zohoMatch = authHeader.match(/^Zoho-oauthtoken\s+(.+)$/i);
-  if (!zohoMatch) {
+  // Match Bearer token format (OAuth2 standard)
+  const bearerMatch = authHeader.match(/^Bearer\s+(.+)$/i);
+  if (!bearerMatch) {
     return null;
   }
-  const accessToken = zohoMatch[1];
+  const accessToken = bearerMatch[1];
 
-  // Extract organization ID
+  // Extract organization ID (optional)
   const organizationId = headers["x-zoho-organization-id"];
-  if (!organizationId || typeof organizationId !== "string") {
-    return null;
-  }
 
   // Extract datacenter (optional, defaults to 'com')
   const datacenter = (headers["x-zoho-datacenter"] as ZohoDatacenter) || "com";
 
-  return { accessToken, organizationId, datacenter };
+  return {
+    accessToken,
+    organizationId: typeof organizationId === "string" ? organizationId : undefined,
+    datacenter,
+  };
 }
 
 /**
