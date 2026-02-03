@@ -12,9 +12,9 @@
     "oauth2": {
       "clientId": "",
       "clientSecret": "",
-      "authorizationUrl": "https://{host}/oauth/authorize",
-      "tokenUrl": "https://{host}/oauth/token",
-      "userinfoUrl": "https://{host}/oauth/userinfo",
+      "authorizationUrl": "https://gitlab.com/oauth/authorize",
+      "tokenUrl": "https://gitlab.com/oauth/token",
+      "userinfoUrl": "https://gitlab.com/oauth/userinfo",
       "scopes": ["api", "read_user", "read_api", "read_repository", "write_repository"],
       "pkce": true
     },
