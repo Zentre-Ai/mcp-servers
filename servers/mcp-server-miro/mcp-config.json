@@ -7,30 +7,14 @@
   "port": 3007,
   "auth": {
     "type": "oauth2",
-    "label": "Miro OAuth",
-    "required": [],
-    "methods": [
-      {
-        "type": "oauth2",
-        "label": "OAuth Access Token",
-        "headers": [
-          {
-            "header": "x-miro-token",
-            "description": "Miro OAuth access token"
-          }
-        ]
-      },
-      {
-        "type": "bearer",
-        "label": "Bearer Token",
-        "headers": [
-          {
-            "header": "Authorization",
-            "description": "Bearer token (Authorization: Bearer <token>)"
-          }
-        ]
-      }
-    ]
+    "label": "Miro OAuth 2.0",
+    "description": "OAuth 2.0 authentication for Miro API access",
+    "oauth2": {
+      "authorizationUrl": "https://miro.com/oauth/authorize",
+      "tokenUrl": "https://api.miro.com/v1/oauth/token",
+      "scopes": ["boards:read", "boards:write", "identity:read"],
+      "pkce": true
+    }
   },
   "tools": [
     { "name": "miro_list_boards", "description": "List all boards" },

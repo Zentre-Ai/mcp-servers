@@ -7,30 +7,14 @@
   "port": 3006,
   "auth": {
     "type": "oauth2",
-    "label": "GitHub OAuth",
-    "required": [],
-    "methods": [
-      {
-        "type": "oauth2",
-        "label": "OAuth Access Token",
-        "headers": [
-          {
-            "header": "x-github-token",
-            "description": "GitHub OAuth access token"
-          }
-        ]
-      },
-      {
-        "type": "bearer",
-        "label": "Bearer Token",
-        "headers": [
-          {
-            "header": "Authorization",
-            "description": "Bearer token (Authorization: Bearer <token>)"
-          }
-        ]
-      }
-    ]
+    "label": "GitHub OAuth 2.0",
+    "description": "OAuth 2.0 authentication for GitHub API access",
+    "oauth2": {
+      "authorizationUrl": "https://github.com/login/oauth/authorize",
+      "tokenUrl": "https://github.com/login/oauth/access_token",
+      "scopes": ["repo", "read:user", "read:org"],
+      "pkce": true
+    }
   },
   "tools": [
     { "name": "github_list_repos", "description": "List repositories" },

@@ -7,30 +7,14 @@
   "port": 3004,
   "auth": {
     "type": "oauth2",
-    "label": "Slack OAuth",
-    "required": [],
-    "methods": [
-      {
-        "type": "oauth2",
-        "label": "OAuth Access Token",
-        "headers": [
-          {
-            "header": "x-slack-token",
-            "description": "Slack OAuth access token"
-          }
-        ]
-      },
-      {
-        "type": "bearer",
-        "label": "Bearer Token",
-        "headers": [
-          {
-            "header": "Authorization",
-            "description": "Bearer token (Authorization: Bearer <token>)"
-          }
-        ]
-      }
-    ]
+    "label": "Slack OAuth 2.0",
+    "description": "OAuth 2.0 authentication for Slack API access",
+    "oauth2": {
+      "authorizationUrl": "https://slack.com/oauth/v2/authorize",
+      "tokenUrl": "https://slack.com/api/oauth.v2.access",
+      "scopes": ["channels:read", "channels:write", "chat:write", "users:read"],
+      "pkce": false
+    }
   },
   "tools": [
     { "name": "slack_list_channels", "description": "List all channels" },

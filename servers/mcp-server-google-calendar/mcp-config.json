@@ -7,30 +7,14 @@
   "port": 3003,
   "auth": {
     "type": "oauth2",
-    "label": "Google OAuth",
-    "required": [],
-    "methods": [
-      {
-        "type": "oauth2",
-        "label": "OAuth Access Token",
-        "headers": [
-          {
-            "header": "x-google-calendar-token",
-            "description": "Google Calendar OAuth access token"
-          }
-        ]
-      },
-      {
-        "type": "bearer",
-        "label": "Bearer Token",
-        "headers": [
-          {
-            "header": "Authorization",
-            "description": "Bearer token (Authorization: Bearer <token>)"
-          }
-        ]
-      }
-    ]
+    "label": "Google OAuth 2.0",
+    "description": "OAuth 2.0 authentication for Google Calendar API access",
+    "oauth2": {
+      "authorizationUrl": "https://accounts.google.com/o/oauth2/v2/auth",
+      "tokenUrl": "https://oauth2.googleapis.com/token",
+      "scopes": ["https://www.googleapis.com/auth/calendar", "https://www.googleapis.com/auth/calendar.events"],
+      "pkce": true
+    }
   },
   "tools": [
     { "name": "calendar_list_calendars", "description": "List all calendars" },

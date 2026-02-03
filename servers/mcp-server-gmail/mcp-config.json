@@ -7,30 +7,14 @@
   "port": 3002,
   "auth": {
     "type": "oauth2",
-    "label": "Google OAuth",
-    "required": [],
-    "methods": [
-      {
-        "type": "oauth2",
-        "label": "OAuth Access Token",
-        "headers": [
-          {
-            "header": "x-gmail-token",
-            "description": "Gmail OAuth access token"
-          }
-        ]
-      },
-      {
-        "type": "bearer",
-        "label": "Bearer Token",
-        "headers": [
-          {
-            "header": "Authorization",
-            "description": "Bearer token (Authorization: Bearer <token>)"
-          }
-        ]
-      }
-    ]
+    "label": "Google OAuth 2.0",
+    "description": "OAuth 2.0 authentication for Gmail API access",
+    "oauth2": {
+      "authorizationUrl": "https://accounts.google.com/o/oauth2/v2/auth",
+      "tokenUrl": "https://oauth2.googleapis.com/token",
+      "scopes": ["https://www.googleapis.com/auth/gmail.readonly", "https://www.googleapis.com/auth/gmail.send", "https://www.googleapis.com/auth/gmail.modify"],
+      "pkce": true
+    }
   },
   "tools": [
     { "name": "gmail_list_messages", "description": "List messages in the mailbox" },

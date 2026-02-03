@@ -7,20 +7,15 @@
   "port": 3010,
   "auth": {
     "type": "oauth2",
-    "label": "Keycloak OAuth",
-    "required": [],
-    "methods": [
-      {
-        "type": "bearer",
-        "label": "Bearer Token",
-        "headers": [
-          {
-            "header": "Authorization",
-            "description": "Bearer token from Keycloak OIDC (Authorization: Bearer <access_token>)"
-          }
-        ]
-      }
-    ]
+    "label": "Keycloak OAuth 2.0 / OIDC",
+    "description": "OAuth 2.0 / OpenID Connect authentication - URL and realm extracted from token issuer",
+    "oauth2": {
+      "authorizationUrl": "https://{host}/realms/{realm}/protocol/openid-connect/auth",
+      "tokenUrl": "https://{host}/realms/{realm}/protocol/openid-connect/token",
+      "scopes": ["openid", "profile"],
+      "pkce": true,
+      "dynamicHost": true
+    }
   },
   "tools": [
     { "name": "keycloak_get_users", "description": "List users with optional filtering" },

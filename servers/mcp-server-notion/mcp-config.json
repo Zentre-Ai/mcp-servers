@@ -7,30 +7,14 @@
   "port": 3001,
   "auth": {
     "type": "oauth2",
-    "label": "Notion OAuth",
-    "required": [],
-    "methods": [
-      {
-        "type": "oauth2",
-        "label": "OAuth Access Token",
-        "headers": [
-          {
-            "header": "x-notion-token",
-            "description": "Notion OAuth access token"
-          }
-        ]
-      },
-      {
-        "type": "bearer",
-        "label": "Bearer Token",
-        "headers": [
-          {
-            "header": "Authorization",
-            "description": "Bearer token (Authorization: Bearer <token>)"
-          }
-        ]
-      }
-    ]
+    "label": "Notion OAuth 2.0",
+    "description": "OAuth 2.0 authentication for Notion API access",
+    "oauth2": {
+      "authorizationUrl": "https://api.notion.com/v1/oauth/authorize",
+      "tokenUrl": "https://api.notion.com/v1/oauth/token",
+      "scopes": [],
+      "pkce": false
+    }
   },
   "tools": [
     { "name": "notion_search", "description": "Search pages and databases" },

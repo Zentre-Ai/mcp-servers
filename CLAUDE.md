@@ -45,6 +45,7 @@ mcp-server-{name}/
 │   └── index.ts            # Entry point with transport selection
 ├── tests/
 │   └── tools/              # Tool tests
+├── mcp-config.json         # Server metadata and auth configuration
 ├── Dockerfile
 ├── docker-compose.yml
 ├── .env.example
@@ -67,6 +68,123 @@ mcp-server-{name}/
 - Use `snake_case` for tool and resource names in MCP registration
 - Use descriptive, action-oriented names for tools (e.g., `create_issue`, `send_message`)
 - Use noun-based names for resources (e.g., `user_profile`, `repository_list`)
+
+---
+
+## MCP Config Format (mcp-config.json)
+
+Every MCP server must include a `mcp-config.json` file with standardized metadata.
+
+### Basic Structure
+
+```json
+{
+  "name": "mcp-server-{name}",
+  "version": "1.0.0",
+  "description": "MCP server for {Service} - brief description",
+  "categories": ["Category"],
+  "tutorial": "## Setup instructions in markdown...",
+  "port": 3000,
+  "auth": { ... },
+  "tools": [
+    { "name": "tool_name", "description": "Tool description" }
+  ]
+}
+```
+
+### Authentication Configuration
+
+#### OAuth 2.0 Servers (Preferred)
+
+```json
+"auth": {
+  "type": "oauth2",
+  "label": "Service OAuth 2.0",
+  "description": "OAuth 2.0 authentication description",
+  "oauth2": {
+    "authorizationUrl": "https://service.com/oauth/authorize",
+    "tokenUrl": "https://service.com/oauth/token",
+    "scopes": ["read", "write"],
+    "pkce": true
+  },
+  "required": [
+    { "header": "x-required-header", "description": "Description" }
+  ],
+  "optional": [
+    { "header": "x-optional-header", "description": "Description", "default": "value" }
+  ]
+}
+```
+
+**OAuth2 specific fields:**
+- `pkce`: Set to `true` if PKCE is supported (recommended)
+- `dynamicCredentials`: Set to `true` if OAuth credentials are passed per-request (multi-tenant)
+- `dynamicHost`: Set to `true` if host is dynamic (e.g., Keycloak, self-hosted GitLab)
+- `multiDatacenter`: Set to `true` if service has multiple datacenters (e.g., Zoho)
+
+#### Token/API Key Servers
+
+```json
+"auth": {
+  "type": "token",
+  "label": "Service Token",
+  "description": "Token authentication description",
+  "required": [
+    { "header": "x-service-url", "description": "Service instance URL" },
+    { "header": "x-service-token", "description": "API token" }
+  ],
+  "optional": []
+}
+```
+
+#### Multiple Auth Options
+
+For servers supporting multiple auth methods (e.g., API key OR basic auth):
+
+```json
+"auth": {
+  "type": "api_key",
+  "label": "Service Authentication",
+  "description": "Supports API key or basic auth",
+  "required": [
+    { "header": "x-service-url", "description": "Service URL" }
+  ],
+  "oneOf": [
+    {
+      "type": "api_key",
+      "label": "API Key (Recommended)",
+      "headers": [
+        { "header": "x-api-key", "description": "API key" }
+      ]
+    },
+    {
+      "type": "basic",
+      "label": "Basic Auth",
+      "headers": [
+        { "header": "x-username", "description": "Username" },
+        { "header": "x-password", "description": "Password" }
+      ]
+    }
+  ]
+}
+```
+
+### Auth Type Values
+
+| Type | Description | Example Services |
+|------|-------------|------------------|
+| `oauth2` | OAuth 2.0 flow | GitHub, Slack, Google, GitLab, Stripe |
+| `token` | Service account token | Grafana |
+| `api_token` | API token auth | Jira Data Center |
+| `api_key` | API key auth | Elasticsearch |
+| `basic` | Username/password | Legacy systems |
+
+### Important Rules
+
+1. **Always use `oauth2`** (not `oauth`) for OAuth 2.0 authentication
+2. **Never use `methods` array** - use the flat structure shown above
+3. **Include `oauth2` object** with URLs and scopes for OAuth2 servers
+4. **List all tools** with name and description
 
 ---
 
@@ -347,7 +465,8 @@ npm run create-server
 1. Create `src/tools/{name}.tool.ts` following the tool pattern above
 2. Import in `src/server.ts` to register it
 3. Add tests in `tests/tools/{name}.test.ts`
-4. Update README.md with tool documentation
+4. Update `mcp-config.json` tools array with new tool entry
+5. Update README.md with tool documentation
 
 ### Adding External API Integration
 

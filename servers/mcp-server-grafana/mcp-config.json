@@ -8,22 +8,15 @@
   "auth": {
     "type": "token",
     "label": "Grafana Service Account Token",
+    "description": "Service account token authentication for Grafana API access",
     "required": [
       {
         "header": "x-grafana-url",
         "description": "Grafana instance URL"
-      }
-    ],
-    "methods": [
+      },
       {
-        "type": "token",
-        "label": "Service Account Token",
-        "headers": [
-          {
-            "header": "x-grafana-token",
-            "description": "Grafana service account token"
-          }
-        ]
+        "header": "x-grafana-token",
+        "description": "Grafana service account token"
       }
     ]
   },
