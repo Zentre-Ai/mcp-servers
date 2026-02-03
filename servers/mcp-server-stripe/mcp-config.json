@@ -1,23 +1,20 @@
 {
   "name": "mcp-server-stripe",
   "version": "1.0.0",
-  "description": "MCP server for Stripe - payment processing, subscriptions, invoices, and financial operations with OAuth 2.0 (Stripe Connect) authentication",
+  "description": "MCP server for Stripe - payment processing, subscriptions, invoices, and financial operations",
   "categories": ["Payments"],
-  "tutorial": "## Stripe OAuth 2.0 Setup (Stripe Connect)\n\n### Creating a Stripe Connect Application\n\n1. Go to [Stripe Dashboard](https://dashboard.stripe.com/settings/connect)\n2. Under **Settings > Connect settings**, enable Stripe Connect\n3. Configure your platform:\n   - **Platform name**: Your application name\n   - **Redirect URIs**: Add your callback URL (e.g., `http://localhost:3010/oauth/callback`)\n4. Note your **Client ID** (starts with `ca_`)\n5. Get your **Secret Key** from [API keys](https://dashboard.stripe.com/apikeys)\n\n### OAuth Flow\n\n1. Call `GET /oauth/authorize?redirect_uri=YOUR_URI` to get authorization URL\n2. User visits the URL and authorizes your app\n3. Exchange the code via `POST /oauth/callback` with `{ \"code\": \"ac_xxx\" }`\n4. Use the access token with `Authorization: Bearer <token>` header\n5. Optionally include `x-stripe-account: acct_xxx` header for connected accounts\n\n### Scopes\n\n- `read_write`: Full access to connected account\n- `read_only`: Read-only access to connected account",
+  "tutorial": "## Stripe API Key Setup\n\n### Getting Your Stripe API Key\n\n1. Go to [Stripe Dashboard](https://dashboard.stripe.com/apikeys)\n2. Copy your **Secret Key** (starts with `sk_test_` for test mode or `sk_live_` for live mode)\n\n### Test vs Live Mode\n\n- **Test mode** (`sk_test_*`): Use for development and testing\n- **Live mode** (`sk_live_*`): Use for production with real payments\n\n### Required Permissions\n\nThe API key provides full access to your Stripe account. For restricted access:\n1. Go to **Developers > API keys > Restricted keys**\n2. Create a key with only the permissions you need\n\n### Security Best Practices\n\n- Never expose your secret key in client-side code\n- Use test mode keys during development\n- Rotate keys periodically\n- Use restricted keys when possible",
   "port": 3010,
   "auth": {
-    "type": "oauth2",
-    "label": "Stripe Connect OAuth 2.0",
-    "description": "Connect to Stripe using OAuth 2.0 for secure payment processing",
-    "oauth2": {
-      "clientId": "",
-      "clientSecret": "",
-      "authorizationUrl": "https://connect.stripe.com/oauth/authorize",
-      "tokenUrl": "https://connect.stripe.com/oauth/token",
-      "userinfoUrl": "https://api.stripe.com/v1/account",
-      "scopes": ["read_write"],
-      "pkce": false
-    },
+    "type": "api_key",
+    "label": "Stripe API Key",
+    "description": "Secret API key for Stripe API access",
+    "required": [
+      {
+        "header": "x-stripe-api-key",
+        "description": "Your Stripe API key. We recommend using a restricted access key."
+      }
+    ],
     "optional": [
       {
         "header": "x-stripe-account",

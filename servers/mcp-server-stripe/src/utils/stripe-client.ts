@@ -5,15 +5,15 @@ import { logger } from "./logger.js";
  * Stripe authentication configuration.
  */
 export interface StripeAuth {
-  accessToken: string;
+  apiKey: string;
   stripeAccountId?: string; // Optional: for connected account operations
 }
 
 /**
- * Create a Stripe client with the provided access token.
+ * Create a Stripe client with the provided API key.
  */
 export function createStripeClient(auth: StripeAuth): Stripe {
-  const stripe = new Stripe(auth.accessToken, {
+  const stripe = new Stripe(auth.apiKey, {
     apiVersion: "2025-02-24.acacia",
     typescript: true,
   });
@@ -39,29 +39,23 @@ export function getStripeOptions(auth: StripeAuth): Stripe.RequestOptions {
 /**
  * Extract Stripe credentials from request headers.
  * Expects:
- *   - Authorization: Bearer <accessToken>
+ *   - x-stripe-api-key: <apiKey> (required)
  *   - x-stripe-account: <stripeAccountId> (optional, for connected account operations)
  */
 export function extractStripeAuth(
   headers: Record<string, string | string[] | undefined>
 ): StripeAuth | null {
-  // Extract bearer token
-  const authHeader = headers["authorization"];
-  if (!authHeader || typeof authHeader !== "string") {
+  // Extract API key from header
+  const apiKey = headers["x-stripe-api-key"];
+  if (!apiKey || typeof apiKey !== "string") {
     return null;
   }
-
-  const bearerMatch = authHeader.match(/^Bearer\s+(.+)$/i);
-  if (!bearerMatch) {
-    return null;
-  }
-  const accessToken = bearerMatch[1];
 
   // Extract optional Stripe account ID for connected account operations
   const stripeAccountId = headers["x-stripe-account"];
 
   return {
-    accessToken,
+    apiKey,
     stripeAccountId: typeof stripeAccountId === "string" ? stripeAccountId : undefined,
   };
 }
