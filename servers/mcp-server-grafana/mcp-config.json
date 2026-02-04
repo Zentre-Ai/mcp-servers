@@ -6,7 +6,7 @@
   "tutorial": "## Grafana Setup\n\n### Getting Your Grafana URL\n\n- **Grafana Cloud**: `https://your-stack.grafana.net`\n- **Self-hosted**: Your Grafana server URL (e.g., `https://grafana.example.com`)\n\n### Creating a Service Account Token\n\n1. Go to **Administration** → **Service accounts**\n2. Click **Add service account**\n3. Enter a name and select a role:\n   - **Viewer**: Read-only access to dashboards\n   - **Editor**: Create/edit dashboards and alerts\n   - **Admin**: Full access including user management\n4. Click **Create**\n5. Click **Add service account token**\n6. Set an expiration (or no expiration)\n7. Click **Generate token** and copy it\n\n### Required Permissions\n\nDepending on your use case:\n- **Dashboards**: Viewer role minimum\n- **Alerts**: Editor role for management\n- **Data sources**: Admin role for configuration\n- **OnCall/Incidents**: Appropriate Grafana Cloud permissions",
   "port": 3008,
   "auth": {
-    "type": "token",
+    "type": "api_key",
     "label": "Grafana Service Account Token",
     "description": "Service account token authentication for Grafana API access",
     "required": [
