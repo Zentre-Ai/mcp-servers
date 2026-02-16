@@ -2,10 +2,11 @@ import { logger } from "./logger.js";
 
 /**
  * Jira Cloud authentication configuration.
+ * cloudId may be undefined if the user has multiple sites and hasn't selected one yet.
  */
 export interface JiraCloudAuth {
   accessToken: string;
-  cloudId: string;
+  cloudId?: string;
 }
 
 /**
@@ -16,7 +17,7 @@ export class JiraCloudClient {
   private baseUrl: string;
   private accessToken: string;
 
-  constructor(auth: JiraCloudAuth) {
+  constructor(auth: JiraCloudAuth & { cloudId: string }) {
     // Jira Cloud API uses the cloud ID in the URL
     this.baseUrl = `https://api.atlassian.com/ex/jira/${auth.cloudId}/rest/api/3`;
     this.accessToken = auth.accessToken;
@@ -169,15 +170,12 @@ export class JiraCloudClient {
 }
 
 /**
- * Extract Jira Cloud credentials from request headers.
- * Expects:
- *   - Authorization: Bearer <accessToken>
- *   - x-jira-cloud-id: <cloudId>
+ * Extract the Bearer access token from request headers.
+ * Expects: Authorization: Bearer <accessToken>
  */
-export function extractJiraCloudAuth(
+export function extractAccessToken(
   headers: Record<string, string | string[] | undefined>
-): JiraCloudAuth | null {
-  // Extract bearer token
+): string | null {
   const authHeader = headers["authorization"];
   if (!authHeader || typeof authHeader !== "string") {
     return null;
@@ -187,21 +185,15 @@ export function extractJiraCloudAuth(
   if (!bearerMatch) {
     return null;
   }
-  const accessToken = bearerMatch[1];
 
-  // Extract cloud ID
-  const cloudId = headers["x-jira-cloud-id"];
-  if (!cloudId || typeof cloudId !== "string") {
-    return null;
-  }
-
-  return { accessToken, cloudId };
+  return bearerMatch[1];
 }
 
 /**
  * Create a Jira Cloud client from authentication config.
+ * Requires cloudId to be set.
  */
-export function createJiraCloudClient(auth: JiraCloudAuth): JiraCloudClient {
+export function createJiraCloudClient(auth: JiraCloudAuth & { cloudId: string }): JiraCloudClient {
   return new JiraCloudClient(auth);
 }
 
