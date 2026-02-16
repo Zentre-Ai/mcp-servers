@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { server, getCurrentAuth } from "../server.js";
+import { server, requireCloudId } from "../server.js";
 import { createJiraCloudClient, formatIssue } from "../utils/jira-cloud-client.js";
 import { logger } from "../utils/logger.js";
 
@@ -16,10 +16,8 @@ server.tool(
     expand: z.string().optional().describe("Comma-separated list of fields to expand"),
   },
   async ({ jql, startAt, maxResults, fields, expand }) => {
-    const auth = getCurrentAuth();
-    if (!auth) {
-      return { content: [{ type: "text", text: "Error: No Jira Cloud credentials available" }] };
-    }
+    const { auth, error } = await requireCloudId();
+    if (error) return error;
 
     try {
       const client = createJiraCloudClient(auth);
@@ -74,10 +72,8 @@ server.tool(
     maxResults: z.number().optional().describe("Maximum number of results (default 50)"),
   },
   async ({ status, project, maxResults }) => {
-    const auth = getCurrentAuth();
-    if (!auth) {
-      return { content: [{ type: "text", text: "Error: No Jira Cloud credentials available" }] };
-    }
+    const { auth, error } = await requireCloudId();
+    if (error) return error;
 
     try {
       const client = createJiraCloudClient(auth);
@@ -128,10 +124,8 @@ server.tool(
     maxResults: z.number().optional().describe("Maximum number of results (default 20)"),
   },
   async ({ project, updatedWithin = "-1d", maxResults = 20 }) => {
-    const auth = getCurrentAuth();
-    if (!auth) {
-      return { content: [{ type: "text", text: "Error: No Jira Cloud credentials available" }] };
-    }
+    const { auth, error } = await requireCloudId();
+    if (error) return error;
 
     try {
       const client = createJiraCloudClient(auth);
@@ -179,10 +173,8 @@ server.tool(
     maxResults: z.number().optional().describe("Maximum number of results (default 50)"),
   },
   async ({ sprintId, status, maxResults = 50 }) => {
-    const auth = getCurrentAuth();
-    if (!auth) {
-      return { content: [{ type: "text", text: "Error: No Jira Cloud credentials available" }] };
-    }
+    const { auth, error } = await requireCloudId();
+    if (error) return error;
 
     try {
       const client = createJiraCloudClient(auth);
@@ -229,10 +221,8 @@ server.tool(
     maxResults: z.number().optional().describe("Maximum number of results (default 50)"),
   },
   async ({ epicKey, maxResults = 50 }) => {
-    const auth = getCurrentAuth();
-    if (!auth) {
-      return { content: [{ type: "text", text: "Error: No Jira Cloud credentials available" }] };
-    }
+    const { auth, error } = await requireCloudId();
+    if (error) return error;
 
     try {
       const client = createJiraCloudClient(auth);

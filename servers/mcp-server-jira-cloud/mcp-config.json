@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "MCP server for Jira Cloud with OAuth 2.0 (3LO) authentication",
   "categories": ["Project Management"],
-  "tutorial": "## Jira Cloud OAuth 2.0 Setup\n\n### Creating an Atlassian OAuth 2.0 App\n\n1. Go to [developer.atlassian.com/console/myapps](https://developer.atlassian.com/console/myapps)\n2. Click **Create** > **OAuth 2.0 integration**\n3. Give your app a name and agree to terms\n4. Under **Authorization**, add a callback URL (e.g., `http://localhost:3006/oauth/callback`)\n5. Under **Permissions**, add:\n   - Jira API > `read:jira-work`\n   - Jira API > `write:jira-work`\n   - Jira API > `read:jira-user`\n6. Under **Settings**, copy your **Client ID** and **Client secret**\n\n### OAuth Flow\n\n1. Call `GET /oauth/authorize` to get the authorization URL\n2. User visits the URL and grants permission\n3. Exchange the code via `POST /oauth/callback`\n4. Use the access token with `Authorization: Bearer <token>` header\n5. Include `x-jira-cloud-id` header from the sites response",
+  "tutorial": "## Jira Cloud OAuth 2.0 Setup\n\n### Creating an Atlassian OAuth 2.0 App\n\n1. Go to [developer.atlassian.com/console/myapps](https://developer.atlassian.com/console/myapps)\n2. Click **Create** > **OAuth 2.0 integration**\n3. Give your app a name and agree to terms\n4. Under **Authorization**, add a callback URL (e.g., `http://localhost:3006/oauth/callback`)\n5. Under **Permissions**, add:\n   - Jira API > `read:jira-work`\n   - Jira API > `write:jira-work`\n   - Jira API > `read:jira-user`\n6. Under **Settings**, copy your **Client ID** and **Client secret**\n\n### OAuth Flow\n\n1. Call `GET /oauth/authorize` to get the authorization URL\n2. User visits the URL and grants permission\n3. Exchange the code via `POST /oauth/callback`\n4. Use the access token with `Authorization: Bearer <token>` header\n5. The server auto-resolves your Jira Cloud site. If you have multiple sites, use `jira_cloud_list_sites` and `jira_cloud_select_site` to choose one.",
   "port": 3006,
   "auth": {
     "type": "oauth2",
@@ -17,12 +17,7 @@
       "scopes": ["read:jira-work", "write:jira-work", "read:jira-user", "offline_access"],
       "pkce": true
     },
-    "required": [
-      {
-        "header": "x-jira-cloud-id",
-        "description": "Jira Cloud site ID (from /oauth/sites endpoint)"
-      }
-    ]
+    "required": []
   },
   "tools": [
     { "name": "jira_cloud_get_issue", "description": "Get issue details" },
@@ -50,6 +45,8 @@
     { "name": "jira_cloud_get_components", "description": "Get project components" },
     { "name": "jira_cloud_get_versions", "description": "Get project versions" },
     { "name": "jira_cloud_get_sprints", "description": "Get board sprints" },
-    { "name": "jira_cloud_get_boards", "description": "Get all boards" }
+    { "name": "jira_cloud_get_boards", "description": "Get all boards" },
+    { "name": "jira_cloud_list_sites", "description": "List accessible Jira Cloud sites" },
+    { "name": "jira_cloud_select_site", "description": "Select a Jira Cloud site for subsequent requests" }
   ]
 }

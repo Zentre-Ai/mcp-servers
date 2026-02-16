@@ -2,8 +2,8 @@
 
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import { createServer, IncomingMessage, ServerResponse } from "http";
-import { server, registerHandlers, setCurrentAuth } from "./server.js";
-import { extractJiraCloudAuth } from "./utils/jira-cloud-client.js";
+import { server, registerHandlers, setCurrentAuth, resolveCloudId } from "./server.js";
+import { extractAccessToken } from "./utils/jira-cloud-client.js";
 import { config } from "./config.js";
 import { logger } from "./utils/logger.js";
 import {
@@ -65,7 +65,7 @@ async function startHttpServer(port: number): Promise<void> {
     res.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS");
     res.setHeader(
       "Access-Control-Allow-Headers",
-      "Content-Type, Authorization, x-jira-cloud-id, mcp-session-id"
+      "Content-Type, Authorization, mcp-session-id"
     );
 
     if (req.method === "OPTIONS") {
@@ -226,19 +226,30 @@ async function startHttpServer(port: number): Promise<void> {
 
     // MCP endpoint
     if (url.pathname === "/mcp") {
-      // Extract Jira Cloud auth from headers
-      const auth = extractJiraCloudAuth(req.headers as Record<string, string | string[] | undefined>);
+      // Extract Bearer token from headers
+      const accessToken = extractAccessToken(req.headers as Record<string, string | string[] | undefined>);
 
-      if (!auth) {
+      if (!accessToken) {
         sendJson(res, 401, {
           error: "Unauthorized",
-          message: "Missing Jira Cloud credentials. Provide Authorization: Bearer <token> and x-jira-cloud-id: <cloudId> headers",
+          message: "Missing credentials. Provide Authorization: Bearer <token> header",
         });
         return;
       }
 
-      // Store auth for use by tools
-      setCurrentAuth(auth);
+      // Try to auto-resolve cloud ID; it may remain undefined for multi-site users
+      let cloudId: string | undefined;
+      try {
+        const result = await resolveCloudId(accessToken);
+        if (result.resolved) {
+          cloudId = result.cloudId;
+        }
+      } catch {
+        // Resolution failed — let tools handle the error
+      }
+
+      // Store auth for use by tools (cloudId may be undefined)
+      setCurrentAuth({ accessToken, cloudId });
 
       try {
         await transport.handleRequest(req, res);
@@ -268,7 +279,7 @@ async function startHttpServer(port: number): Promise<void> {
     logger.info("");
     logger.info("MCP Authentication:");
     logger.info("  Authorization: Bearer <accessToken>");
-    logger.info("  x-jira-cloud-id: <cloudId>");
+    logger.info("  Cloud ID is auto-resolved from accessible resources");
   });
 }
 

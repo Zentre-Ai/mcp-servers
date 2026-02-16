@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { server, getCurrentAuth } from "../server.js";
+import { server, requireCloudId } from "../server.js";
 import { createJiraCloudClient, formatIssue } from "../utils/jira-cloud-client.js";
 import { logger } from "../utils/logger.js";
 
@@ -14,10 +14,8 @@ server.tool(
     expand: z.string().optional().describe("Comma-separated list of fields to expand (e.g., 'changelog,transitions')"),
   },
   async ({ issueIdOrKey, fields, expand }) => {
-    const auth = getCurrentAuth();
-    if (!auth) {
-      return { content: [{ type: "text", text: "Error: No Jira Cloud credentials available" }] };
-    }
+    const { auth, error } = await requireCloudId();
+    if (error) return error;
 
     try {
       const client = createJiraCloudClient(auth);
@@ -52,10 +50,8 @@ server.tool(
     dueDate: z.string().optional().describe("Due date (YYYY-MM-DD format)"),
   },
   async ({ projectKey, issueType, summary, description, assigneeId, priority, labels, parentKey, dueDate }) => {
-    const auth = getCurrentAuth();
-    if (!auth) {
-      return { content: [{ type: "text", text: "Error: No Jira Cloud credentials available" }] };
-    }
+    const { auth, error } = await requireCloudId();
+    if (error) return error;
 
     try {
       const client = createJiraCloudClient(auth);
@@ -142,10 +138,8 @@ server.tool(
     dueDate: z.string().optional().describe("New due date (YYYY-MM-DD format)"),
   },
   async ({ issueIdOrKey, summary, description, assigneeId, priority, labels, dueDate }) => {
-    const auth = getCurrentAuth();
-    if (!auth) {
-      return { content: [{ type: "text", text: "Error: No Jira Cloud credentials available" }] };
-    }
+    const { auth, error } = await requireCloudId();
+    if (error) return error;
 
     try {
       const client = createJiraCloudClient(auth);
@@ -207,10 +201,8 @@ server.tool(
     deleteSubtasks: z.boolean().optional().describe("Whether to delete subtasks (default false)"),
   },
   async ({ issueIdOrKey, deleteSubtasks }) => {
-    const auth = getCurrentAuth();
-    if (!auth) {
-      return { content: [{ type: "text", text: "Error: No Jira Cloud credentials available" }] };
-    }
+    const { auth, error } = await requireCloudId();
+    if (error) return error;
 
     try {
       const client = createJiraCloudClient(auth);
@@ -238,10 +230,8 @@ server.tool(
     issueIdOrKey: z.string().describe("Issue key (e.g., 'PROJ-123') or ID"),
   },
   async ({ issueIdOrKey }) => {
-    const auth = getCurrentAuth();
-    if (!auth) {
-      return { content: [{ type: "text", text: "Error: No Jira Cloud credentials available" }] };
-    }
+    const { auth, error } = await requireCloudId();
+    if (error) return error;
 
     try {
       const client = createJiraCloudClient(auth);
@@ -275,10 +265,8 @@ server.tool(
     comment: z.string().optional().describe("Comment to add with the transition"),
   },
   async ({ issueIdOrKey, transitionId, comment }) => {
-    const auth = getCurrentAuth();
-    if (!auth) {
-      return { content: [{ type: "text", text: "Error: No Jira Cloud credentials available" }] };
-    }
+    const { auth, error } = await requireCloudId();
+    if (error) return error;
 
     try {
       const client = createJiraCloudClient(auth);
@@ -333,10 +321,8 @@ server.tool(
     body: z.string().describe("Comment body text"),
   },
   async ({ issueIdOrKey, body }) => {
-    const auth = getCurrentAuth();
-    if (!auth) {
-      return { content: [{ type: "text", text: "Error: No Jira Cloud credentials available" }] };
-    }
+    const { auth, error } = await requireCloudId();
+    if (error) return error;
 
     try {
       const client = createJiraCloudClient(auth);
@@ -389,10 +375,8 @@ server.tool(
     maxResults: z.number().optional().describe("Maximum number of comments to return (default 50)"),
   },
   async ({ issueIdOrKey, startAt, maxResults }) => {
-    const auth = getCurrentAuth();
-    if (!auth) {
-      return { content: [{ type: "text", text: "Error: No Jira Cloud credentials available" }] };
-    }
+    const { auth, error } = await requireCloudId();
+    if (error) return error;
 
     try {
       const client = createJiraCloudClient(auth);
@@ -450,10 +434,8 @@ server.tool(
     accountId: z.string().optional().describe("Account ID of assignee (omit or use null to unassign)"),
   },
   async ({ issueIdOrKey, accountId }) => {
-    const auth = getCurrentAuth();
-    if (!auth) {
-      return { content: [{ type: "text", text: "Error: No Jira Cloud credentials available" }] };
-    }
+    const { auth, error } = await requireCloudId();
+    if (error) return error;
 
     try {
       const client = createJiraCloudClient(auth);
